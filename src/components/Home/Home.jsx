@@ -14,7 +14,7 @@ const Home = () => {
   return (
     <section
       id="home"
-      className="relative h-screen flex flex-col justify-center items-center gap-5 md:flex-row-reverse md:gap-16"
+      className="relative  h-screen  flex flex-col justify-center items-center gap-5 md:flex-row-reverse md:gap-16"
     >
       <motion.div
         className="text-center flex flex-col gap-2"
@@ -42,17 +42,17 @@ const Home = () => {
           />
         </span>
       </motion.div>
-      <div className="flex flex-col md:flex-row-reverse items-center justify-center gap-3 md:gap-7">
+      <div className="flex flex-col md:flex-row-reverse items-center justify-center md:gap-7">
         <motion.img
           whileInView={{ opacity: [0, 1], scale: [0.9, 1] }}
           transition={{ duration: 1.5 }}
           src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1680781580/rithickImg.jpg"
           alt="profile img"
-          className="h-[210px] md:h-[260px] rounded-full"
+          className="h-[200px] md:h-[260px] rounded-full"
         />
         <ul className="flex items-start justify-evenly md:flex-col md:items-end gap-3 md:gap-7">
           <motion.li
-            className="h-14 w-14 bg-white/90 flex justify-center items-center rounded-full md:h-16 md:w-16 md:-mr-4"
+            className="h-12 w-12 bg-white/90 flex justify-center items-center rounded-full md:h-16 md:w-16 md:-mr-4"
             whileInView={{
               opacity: [0, 1],
               y: [30, 0],
@@ -66,7 +66,7 @@ const Home = () => {
             />
           </motion.li>
           <motion.li
-            className="h-20 w-20 mt-10 bg-white/90 flex justify-center items-center rounded-full md:h-24 md:w-24 md:mt-0"
+            className="h-16 w-16 mt-10 bg-white/90 flex justify-center items-center rounded-full md:h-24 md:w-24 md:mt-0"
             animate={{ rotate: 180 }}
             transition={{
               duration: 1,
@@ -101,7 +101,7 @@ const Home = () => {
           </motion.li>
         </ul>
       </div>
-      <ul className="absolute flex flex-col gap-3 bottom-16 left-0">
+      <ul className="absolute flex flex-col gap-3 bottom-7 left-0">
         <motion.li
           className="h-8 w-8 cursor-pointer border-[1px] border-white rounded-full flex items-center justify-center font-md hover:bg-white/25 hover:border-2"
           whileInView={{ y: [-30, 0] }}
