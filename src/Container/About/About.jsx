@@ -9,14 +9,14 @@ const aboutMe = [
 
 const About = () => {
   return (
-    <section id="about" className="h-screen pt-[5.5rem]">
+    <section id="about" className="min-h-screen pb-6 pt-[5.5rem]">
       <Tittle>About </Tittle>
       <div className="flex flex-col md:flex-row gap-6 h-full items-center">
         <div className="px-4 mt-8 flex flex-col md:flex-1 gap-4">
           {aboutMe.map((each, i) => (
             <motion.p
               key={"id" + i}
-              className="text-sm md:text-[20px] font-light indent-7"
+              className="text-sm font-light indent-7"
               whileInView={{ y: [50, 0] }}
               transition={{ duration: 0.5, delay: i * 0.25 }}
             >
@@ -27,7 +27,7 @@ const About = () => {
         <div className="md:flex-1">
           <motion.img
             src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1681579190/Picsart_23-04-12_17-16-14-867_1_bjy8rt.jpg"
-            className="h-[210px] md:h-[55vh] mx-auto border-2 border-orange-500 rounded-2xl backdrop-blur-lg"
+            className="h-[210px] md:h-[280px] mx-auto border-2 border-orange-500 rounded-2xl backdrop-blur-lg"
             alt="rithck img 2"
             whileInView={{ y: [100, 0], x: [100, 0], opacity: [0, 0.35, 1] }}
             transition={{ duration: 0.75, delay: 0.25 }}

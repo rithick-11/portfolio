@@ -7,7 +7,7 @@ const Tittle = ({ children }) => {
       <motion.h1
         className="text-xl font-medium drop-shadow-lg w-fit"
         whileInView={{x:[30,0]}}
-        transition={{duration:.5}}
+        transition={{duration:1}}
       >
         <span className="text-2xl font-bold text-orange-500">
           {children[0]}
