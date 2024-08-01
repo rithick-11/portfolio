@@ -50,7 +50,7 @@ const Home = () => {
           alt="profile img"
           className="h-[210px] md:h-[260px] rounded-full"
         />
-        <ul className="flex items-start justify-evenly md:flex-col md:items-end gap-7">
+        <ul className="flex items-start justify-evenly md:flex-col md:items-end gap-3 md:gap-7">
           <motion.li
             className="h-14 w-14 bg-white/90 flex justify-center items-center rounded-full md:h-16 md:w-16 md:-mr-4"
             whileInView={{
@@ -101,7 +101,7 @@ const Home = () => {
           </motion.li>
         </ul>
       </div>
-      <ul className="absolute flex flex-col gap-3 bottom-16 left-3">
+      <ul className="absolute flex flex-col gap-3 bottom-16 left-0">
         <motion.li
           className="h-8 w-8 cursor-pointer border-[1px] border-white rounded-full flex items-center justify-center font-md hover:bg-white/25 hover:border-2"
           whileInView={{ y: [-30, 0] }}

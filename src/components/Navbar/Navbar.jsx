@@ -7,7 +7,7 @@ const Navbar = () => {
 
   const navItems = ["home", "about", "skills", "eaducatoin", "project"];
   return (
-    <div className="text-white px-4 py-4 sm:px-16 md:px-24 fixed top-0 right-0 left-0">
+    <div className="text-white px-4 py-4 sm:px-16 md:px-24 fixed top-0 right-0 left-0 z-30">
       <nav className="flex items-center gap-4 justify-between px-4 py-2 rounded-full border-[1px] bg-white/5 shadow-md backdrop-blur drop-shadow-md border-white">
         <div className="text-2xl font-medium">
           Rithic<span>K</span>
