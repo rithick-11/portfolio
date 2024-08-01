@@ -5,20 +5,20 @@ import { RxCrossCircled } from "react-icons/rx";
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
 
-  const navItems = ["home", "about", "skills", "eaducatoin", "project"];
+  const navItems = ["home", "about", "education", "skills", "project"];
   return (
     <div className="text-white px-4 py-4 sm:px-16 md:px-24 fixed top-0 right-0 left-0 z-30">
       <nav className="flex items-center gap-4 justify-between px-4 py-2 rounded-full border-[1px] bg-white/5 shadow-md backdrop-blur drop-shadow-md border-white">
         <div className="text-2xl font-medium">
           Rithic<span>K</span>
         </div>
-        <ul className="hidden md:flex flex-[.75] justify-around uppercase ">
+        <ul className="hidden md:flex flex-[.75] justify-center uppercase ">
           {navItems.map((items, i) => (
             <l1
               key={items + i}
               className="px-2 py-1 mr-2 text-sm text-white/90"
             >
-              <a href={`#${items}`} className="hover:text-white">
+              <a href={`#${items}`} className="hover:text-orange-500">
                 {items}
               </a>
             </l1>
@@ -48,7 +48,7 @@ const Navbar = () => {
               >
                 <a
                   href={`#${items}`}
-                  className="hover:text-white"
+                  className="hover:text-orange-500"
                   onClick={() => {
                     setToggle(false);
                   }}

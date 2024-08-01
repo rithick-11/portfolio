@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
 import About from "./Container/About/About";
+import Education from "./Container/Education/Education";
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
         <div className="relative top-0 right-0 left-0 h-screen overflow-y-auto text-white px-4 sm:px-16 md:px-24 scroll-smooth">
           <Home /> 
           <About />
+          <Education />
         </div>
       
     </>
