@@ -40,7 +40,7 @@ const Navbar = () => {
           />
         )}
         {toggle && (
-          <ul className="absolute flex flex-col uppercase top-0 right-5 bg-white/5 px-8 py-10 mt-16 gap-5 text-right border-[1px] border-white backdrop-blur rounded-lg md:hidden">
+          <ul className="absolute flex flex-col uppercase top-0 right-5 bg-black/80 px-8 py-10 mt-16 gap-5 text-right border-[1px] border-white backdrop-blur rounded-lg md:hidden">
             {navItems.map((items, i) => (
               <l1
                 key={items + i}

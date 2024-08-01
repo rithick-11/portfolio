@@ -1,30 +1,85 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import React from "react";
+import Typewriter from "typewriter-effect";
+import { motion } from "framer-motion";
+import nodeLogo from "../../Asserts/node.png";
+import reactLogo from "../../Asserts/react.png";
+import pythonLogo from "../../Asserts/python.png";
 
 const Home = () => {
   return (
-    <section className='bg-slate-100/5 h-[80vh] sm:h-[60vh] mt-4 grid sm:grid-cols-2 font-mono'>
-        <div className='flex items-center justify-center'>
-            <motion.img
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1680781580/rithickImg.jpg"
-            alt="profile img"
-            className='h-[180px] sm:h-[220px] md:h-[280px] rounded-full object-cover'
+    <section className="h-screen flex flex-col justify-center items-center gap-5">
+      <div className="text-center flex flex-col gap-2">
+        <h1 className="text-lg">
+          <span>👋</span>
+          Hi i am
+        </h1>
+        <h1 className="text-2xl">
+          RithickRoshan <span>s</span>
+        </h1>
+        <span className="text-sm">
+          <Typewriter
+            options={{
+              strings: ["MERN Stack developer", "Cyber Security Student"],
+              autoStart: true,
+              loop: true,
+            }}
           />
-        </div>
-        <div className='flex flex-col items-center sm:items-start justify-center gap-3'>
-            <h1 className='text-md '>Hi... this is</h1>
-            <h1 className='text-3xl font-semibold'>RithickRoshan S</h1>
-            <div className='flex flex-col sm:flex-row items-center gap-3'>
-                <p>i am a</p>
-                <h1>MERN Stack developer & Cyber Security Student</h1>
-            </div>
-
-        </div>
+        </span>
+      </div>
+      <div>
+        <img
+          src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1680781580/rithickImg.jpg"
+          alt="profile img"
+          className="h-[220px] rounded-full"
+        />
+        <ul className="flex items-start justify-evenly">
+          <motion.li
+            className="h-14 w-14 bg-white/90 flex justify-center items-center rounded-full"
+            whileInView={{
+              opacity:[0,1],
+              y:[30, 0]
+            }}
+            transition={{duration:1}}          
+          >
+            <img
+              src={nodeLogo}
+              alt="react logo"
+              className="h-[70%] drop-shadow-lg"
+            />
+          </motion.li>
+          <motion.li
+            className="h-20 w-20 mt-10 bg-white/90 flex justify-center items-center rounded-full"
+            animate={{ rotate: 180 }}
+            transition={{duration:1, damping: 400, loop: Infinity, delay:.5 }}
+            whileInView={{
+              opacity:[0,1],
+              y:[30, 0]
+            }}
+          >
+            <img
+              src={reactLogo}
+              alt="react logo"
+              className="h-[70%] drop-shadow-lg"
+            />
+          </motion.li>
+          <motion.li 
+            className="h-14 w-14 bg-white/90 flex justify-center items-center rounded-full"
+            whileInView={{
+              opacity:[0,1],
+              y:[30, 0],
+            }}
+            transition={{duration:1, delay:1}} 
+          >
+            <img
+              src={pythonLogo}
+              alt="react logo"
+              className="h-[70%] drop-shadow-lg"
+            />
+          </motion.li>
+        </ul>
+      </div>
     </section>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
