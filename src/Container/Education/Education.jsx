@@ -33,7 +33,7 @@ const Education = () => {
           <motion.li
             key={i+"education"}
             className="bg-white/5 backdrop-blur-md px-5 py-5 flex gap-3 border-[.5px] border-orange-400 rounded-2xl shadow-xl shadow-white/10"
-            whileInView={{scale:[.5,.7,.9,1], opacity:[0,1]}}
+            whileInView={{scale:[.5,1], opacity:[0,1]}}
             transition={{duration:.5, delay:i*.20}}
         >
             <div className="flex flex-col items-center gap-1">

@@ -109,11 +109,11 @@ const Skills = () => {
           <motion.li
             key={each + i}
             whileInView={{ y: [30, 0], opacity: [0, 1] }}
-            transition={{ duration: 0.35, delay: i * 0.15 }}
+            transition={{ duration: 0.25, delay: i * 0.10 }}
           >
             <button className="relative inline-flex h-auto overflow-hidden rounded-full p-[1px] -gray-50" onClick={() => setCatState(each)}>
               <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-              <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-gray-950 px-2 py-1 text-sm font-medium text-gray-50 backdrop-blur-3xl">
+              <span className={`inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full ${catState === each ? "bg-white/75 font-bold text-orange-600" : "bg-gray-950 font-medium"} px-2 py-1 text-sm text-gray-50 backdrop-blur-3xl`}>
                 {each}
               </span>
             </button>
@@ -145,7 +145,7 @@ const Skills = () => {
               key={i+"para"}
               className="text-sm font-light"
               whileInView={{opacity:[0,1], y:[40,0]}}
-              transition={{duration:.74, ease:"circOut", delay:i*.25+.5}}
+              transition={{duration:.35, ease:"circOut", delay:i*.25}}
             >{each}</motion.p>
         )) }
       </div>
