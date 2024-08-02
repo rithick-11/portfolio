@@ -1,7 +1,8 @@
 {
   "files": {
-    "main.css": "/portfolio/static/css/main.a7595c27.css",
-    "main.js": "/portfolio/static/js/main.3f51a965.js",
+    "main.css": "/portfolio/static/css/main.156c31b2.css",
+    "main.js": "/portfolio/static/js/main.08ce56a6.js",
+    "static/media/matchGame.png": "/portfolio/static/media/matchGame.7c533255e7a0b3cc16f6.png",
     "static/media/bootstrap.png": "/portfolio/static/media/bootstrap.708c875d1c61bc7e9ec9.png",
     "static/media/react.png": "/portfolio/static/media/react.98a40c0b204c0061e0b8.png",
     "static/media/mangoDB.png": "/portfolio/static/media/mangoDB.de7cb7234e3692cd2a75.png",
@@ -14,12 +15,15 @@
     "static/media/tailwind.png": "/portfolio/static/media/tailwind.b6075e78c4cb74efd675.png",
     "static/media/express.png": "/portfolio/static/media/express.7064278493a4d0b4eefe.png",
     "static/media/sql.png": "/portfolio/static/media/sql.79c124847bad37afc6b3.png",
+    "static/media/gradientGenarator.png": "/portfolio/static/media/gradientGenarator.8513fdf475b2075b8dd1.png",
+    "static/media/expensesManager.png": "/portfolio/static/media/expensesManager.16687085825f449bb12a.png",
+    "static/media/todoApp.png": "/portfolio/static/media/todoApp.de5545e30fa061a171a6.png",
     "index.html": "/portfolio/index.html",
-    "main.a7595c27.css.map": "/portfolio/static/css/main.a7595c27.css.map",
-    "main.3f51a965.js.map": "/portfolio/static/js/main.3f51a965.js.map"
+    "main.156c31b2.css.map": "/portfolio/static/css/main.156c31b2.css.map",
+    "main.08ce56a6.js.map": "/portfolio/static/js/main.08ce56a6.js.map"
   },
   "entrypoints": [
-    "static/css/main.a7595c27.css",
-    "static/js/main.3f51a965.js"
+    "static/css/main.156c31b2.css",
+    "static/js/main.08ce56a6.js"
   ]
 }
