@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import {motion, useScroll, useMotionValueEvent} from "framer-motion"
 import { HiBars3BottomRight } from "react-icons/hi2";
 import { RxCrossCircled } from "react-icons/rx";
@@ -70,6 +70,7 @@ const Navbar = () => {
                   className="hover:text-orange-500"
                   onClick={() => {
                     setToggle(false);
+                    setNavShow(true)
                   }}
                 >
                   {items}
