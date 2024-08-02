@@ -10,7 +10,7 @@ const Projects = () => {
   console.log(mrProjectList);
 
   return (
-    <section id="project" className="min-h-screen pb-7 pt-[5.5rem]">
+    <section id="project" className="min-h-screen overflow-y-hidden pb-7 pt-[5.5rem]">
       <Tittle>Project's</Tittle>
       <motion.h1
         whileInView={{ opacity: [0, 1], x: [100, 0] }}
