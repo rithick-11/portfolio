@@ -10,12 +10,12 @@ const Projects = () => {
   console.log(mrProjectList);
 
   return (
-    <section id="project" className="min-h-screen overflow-y-hidden pb-7 pt-[5.5rem]">
+    <section id="project" className="min-h-screen pb-10 pt-[5.5rem]">
       <Tittle>Project's</Tittle>
       <motion.h1
-        whileInView={{ opacity: [0, 1], x: [100, 0] }}
+        whileInView={{ opacity: [0, 1], x: [10, 0] }}
         transition={{ duration: 0.5 }}
-        className="text-right my-5 mr-10 font-medium text-lg"
+        className="text-right my-5  font-medium text-lg"
       >
         Design. Develop. Deliver.
       </motion.h1>
