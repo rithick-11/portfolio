@@ -1,13 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import {motion, useScroll, useMotionValueEvent} from "framer-motion"
 import { HiBars3BottomRight } from "react-icons/hi2";
 import { RxCrossCircled } from "react-icons/rx";
 
 const Navbar = () => {
-  const [toggle, setToggle] = useState(false);
 
+  const {scrollY} = useScroll()
+
+  const [toggle, setToggle] = useState(false);
+  const [navShow, setNavShow] = useState(true)
+
+  useMotionValueEvent(scrollY, "change", (last) => {
+    if(last > scrollY.getPrevious() && last > 200){
+      setNavShow(false)
+    }else{
+      setNavShow(true)
+    }
+  })
+
+  
   const navItems = ["home", "about", "education", "skills", "project"];
   return (
-    <div className="text-white px-4 py-4 sm:px-16 md:px-24 fixed top-0 right-0 left-0 z-30">
+    <motion.div
+      variants={{visable: {y:0}, hide : {y: "-100%"}}}
+      animate={navShow ? "visable" : "hide"}
+      transition={{duration:.5, ease:"easeInOut"}}
+      className="text-white px-4 py-4 sm:px-16 md:px-24 fixed top-0 right-0 left-0 z-30"
+    >
       <nav className="flex items-center gap-4 justify-between px-4 py-2 rounded-full border-[1px] bg-white/5 shadow-md backdrop-blur drop-shadow-md border-white">
         <div className="text-2xl font-medium">
           Rithic<span>K</span>
@@ -60,7 +79,7 @@ const Navbar = () => {
           </ul>
         )}
       </nav>
-    </div>
+    </motion.div>
   );
 };
 

@@ -29,8 +29,8 @@ const About = () => {
             src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1681579190/Picsart_23-04-12_17-16-14-867_1_bjy8rt.jpg"
             className="h-[210px] md:h-[280px] mx-auto border-2 border-orange-500 rounded-2xl backdrop-blur-lg"
             alt="rithck img 2"
-            whileInView={{ y: [100, 0], x: [100, 0], opacity: [0, 0.35, 1] }}
-            transition={{ duration: 0.75, delay: 0.25 }}
+            whileInView={{ y: [100, 0], x: [100, 0], opacity: [0, 0.35, 1], scale:[.2,1]}}
+            transition={{ duration: 0.5, delay: 0.15 }}
           />
         </div>
       </div>

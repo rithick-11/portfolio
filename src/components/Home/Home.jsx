@@ -152,7 +152,7 @@ const Home = () => {
           </>
         )}
         <motion.li
-          className="h-8 w-8 cursor-pointer border-[1px] border-white rounded-full flex items-center justify-center font-md hover:bg-white/25 hover:border-2"
+          className="h-8 w-8 cursor-pointer border-[1px] border-white rounded-full flex items-center justify-center font-md bg-orange-600 hover:bg-orange-600/60 hover:border-2"
           whileInView={{ y: [30, 0] }}
           transition={{ duration: 0.5 }}
           onClick={() => {setShowIcon(pre => ! pre)}}
