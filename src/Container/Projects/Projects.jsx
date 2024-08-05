@@ -1,23 +1,32 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Cookies from "js-cookie";
 
 
 import { mrProjectList } from "../../Asserts/content";
 import Tittle from "../../components/Tittle/Tittle";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
 
+const domainUrl = {loaclHost:"http://localhost:3010", cloud:"https://portfolio-server-9ly0.onrender.com"};
+
 const Projects = () => {
   const [page, setPage] = useState(2);
   const [dbProjectList, setDbProjectList] = useState([]);
 
   useState(async () => {
-    const url = `https://portfolio-server-9ly0.onrender.com/user/project`;
-    const res = await fetch(url);
+    const url = `${domainUrl.cloud}/user/project`;
+    const option = {
+      method: "get",
+      headers: {
+        Authoriaztion: `Bearer ${Cookies.get("user_token")}`,
+      },
+    };
+    const res = await fetch(url, option);
     const projectList = await res.json();
     setDbProjectList(projectList);
   }, []);
 
-  
+
 
   return (
     <section id="project" className="min-h-screen pb-10 pt-[5.5rem]">
@@ -30,7 +39,7 @@ const Projects = () => {
         Design. Develop. Deliver.
       </motion.h1>
       <ul className="flex flex-wrap gap-8 justify-center mb-5">
-        {mrProjectList.slice(0, page).map((each, i) => (
+        {dbProjectList.slice(0, page).map((each, i) => (
           <ProjectCard each={each} key={i+"project"} i = {i} />
         ))}
       </ul>
