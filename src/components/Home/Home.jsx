@@ -107,7 +107,7 @@ const Home = () => {
           whileInView={{ y: [-30, 0] }}
           transition={{ duration: 0.5 }}
         >
-          <a href="https://www.linkedin.com/in/rithickroshan-s" target="_blank">
+          <a href="https://www.linkedin.com/in/rithickroshan-s" target="_blank" rel="noopener noreferrer">
             <FaLinkedinIn />
           </a>
         </motion.li>
@@ -116,7 +116,7 @@ const Home = () => {
           whileInView={{ x: [-30, 0] }}
           transition={{ duration: 0.5 }}
         >
-          <a href="https://www.instagram.com/s.ri_thick" target="_blank">
+          <a href="https://www.instagram.com/s.ri_thick" target="_blank" rel="noopener noreferrer">
             <FaInstagram />
           </a>
         </motion.li>
@@ -125,7 +125,7 @@ const Home = () => {
           whileInView={{ x: [30, 0] }}
           transition={{ duration: 0.5 }}
         >
-          <a href="https://github.com/rithick-11" target="_blank">
+          <a href="https://github.com/rithick-11" target="_blank" rel="noopener noreferrer">
             <FaGithub />
           </a>
         </motion.li>
@@ -136,7 +136,7 @@ const Home = () => {
               whileInView={{ x: [-30, 0] }}
               transition={{ duration: 0.5 }}
             >
-              <a href="https://twitter.com/rithick__11" target="_blank">
+              <a href="https://twitter.com/rithick__11" target="_blank" rel="noopener noreferrer">
                 <FaXTwitter />
               </a>
             </motion.li>
@@ -145,7 +145,7 @@ const Home = () => {
               whileInView={{ x: [30, 0] }}
               transition={{ duration: 0.5 }}
             >
-              <a href="https://www.snapchat.com/add/ri_thick11?share_id=WJ9TQ4uEy10&locale=en-US" target="_blank">
+              <a href="https://www.snapchat.com/add/ri_thick11?share_id=WJ9TQ4uEy10&locale=en-US" target="_blank" rel="noopener noreferrer">
                 <FaSnapchat />
               </a>
             </motion.li>

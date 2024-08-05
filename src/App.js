@@ -11,7 +11,7 @@ const App = () => {
     <>
         
         <Navbar />
-        <div className="top-0 right-0 left-0 h-screen  text-white px-4 sm:px-16 md:px-24 scroll-smooth">
+        <div className="top-0 right-0 left-0 h-screen text-white px-4 sm:px-16 md:px-24 scroll-smooth">
           <Home /> 
           <About />
           <Education />
