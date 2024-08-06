@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { HiBars3BottomRight } from "react-icons/hi2";
 import Cookies from "js-cookie";
-import { FaUserAlt } from "react-icons/fa";
+import { IoIosLogOut } from "react-icons/io";
 import { RxCrossCircled } from "react-icons/rx";
 import LoginCard from "../LoginCard/LoginCard";
 
@@ -31,7 +31,7 @@ const Navbar = () => {
   };
 
   const getUserData = async () => {
-    if (isLogin) {
+    if (Cookies.get("user_token") !== undefined) {
       const url = `${domainUrl.cloud}/user/data`;
       const option = {
         method: "get",
@@ -45,19 +45,38 @@ const Navbar = () => {
     }
   };
 
+  const logInSuccess = () => {
+    setIsLogin(true)
+    getUserData()
+  }
+
+
+
+
   useEffect(() => {
     getUserData();
-  },[]);
+  }, []);
 
-  const tohandleLogInOut = async () => {
-    if (isLogin) {
-      <></>;
-    } else {
-      setShowLogin(true);
-    }
-  };
 
-  const navItems = ["home", "about", "education", "skills", "project", "contact"];
+  const toLogOut = () => {
+    Cookies.remove("user_token");
+    setIsLogin(false);
+  }
+
+  const toLogIn =  () => {
+    setShowLogin(true)
+  }
+
+  
+
+  const navItems = [
+    "home",
+    "about",
+    "education",
+    "skills",
+    "project",
+    "contact",
+  ];
   return (
     <motion.div
       variants={{ visable: { y: 0 }, hide: { y: "-100%" } }}
@@ -82,18 +101,24 @@ const Navbar = () => {
               </l1>
             ))}
           </ul>
-          <button
-            className="px-2 py-1 bg-orange-500 rounded-full text-md font-bolder border-2  hover:scale-105"
-            onClick={tohandleLogInOut}
-          >
-            {isLogin ? (
-              <span className="flex items-center gap-1">
-                <FaUserAlt /> {user.name.slice(0, 7)}{" "}
-              </span>
+          {isLogin ? (
+              <button
+                className="px-2 py-1 bg-orange-500 rounded-full text-md font-bolder border-2  hover:scale-105"
+                onClick={toLogOut}
+              >
+                <span className="flex items-center gap-1 justify-center">
+                  {user.name.slice(0, 7)} <IoIosLogOut />
+                </span>
+              </button>
             ) : (
-              "Login"
+              <button
+                className="px-2 py-1 bg-orange-500 rounded-full text-md font-bolder border-2  hover:scale-105"
+                // onClick={tohandleLogInOut}
+                onClick={toLogIn}
+              >
+                Login
+              </button>
             )}
-          </button>
         </div>
         {toggle ? (
           <RxCrossCircled
@@ -101,7 +126,7 @@ const Navbar = () => {
             onClick={() => {
               setToggle(false);
             }}
-          /> 
+          />
         ) : (
           <HiBars3BottomRight
             className="text-2xl font-bold mr-3 md:hidden"
@@ -135,18 +160,24 @@ const Navbar = () => {
                 </l1>
               ))}
             </ul>
-            <button
-              className="px-2 py-1 bg-orange-500 rounded-full text-md font-bolder border-2  hover:scale-105"
-              onClick={tohandleLogInOut}
-            >
-              {isLogin ? (
+            {isLogin ? (
+              <button
+                className="px-2 py-1 bg-orange-500 rounded-full text-md font-bolder border-2  hover:scale-105"
+                onClick={toLogOut}
+              >
                 <span className="flex items-center gap-1 justify-center">
-                  <FaUserAlt /> {user.name.slice(0, 7)}{" "}
+                  {user.name.slice(0, 7)} <IoIosLogOut />
                 </span>
-              ) : (
-                "Login"
-              )}
-            </button>
+              </button>
+            ) : (
+              <button
+                className="px-2 py-1 bg-orange-500 rounded-full text-md font-bolder border-2  hover:scale-105"
+                // onClick={tohandleLogInOut}
+                onClick={toLogIn}
+              >
+                Login
+              </button>
+            )}
           </motion.div>
         )}
       </nav>
@@ -155,6 +186,7 @@ const Navbar = () => {
           close={() => {
             setShowLogin(false);
           }}
+          reload={logInSuccess}
         />
       )}
     </motion.div>

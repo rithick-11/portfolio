@@ -25,7 +25,7 @@ const apiStateInit = {
 };
 
 const LoginCard = (props) => {
-  const { close } = props;
+  const { close, reload } = props;
 
   const [loginForm, setLoginForm] = useState(false);
   const [apiRes, setApiRes] = useState(apiStateInit);
@@ -100,6 +100,7 @@ const LoginCard = (props) => {
         errMsg: data.msg,
       }));
       close(false);
+      reload()
     } else if (res.status === 404) {
       setApiRes((prev) => ({
         ...prev,
@@ -114,7 +115,7 @@ const LoginCard = (props) => {
       initial={{x:"100%"}}
       animate={{x:0}}
       className="fixed h-screen w-screen top-0 right-0 left-0 bg-black/65 flex items-center justify-center z-30 backdrop-blur-sm">
-      <div className="h-[70%] w-[75%] sm:h-[26rem] sm:w-96 sm:px-3 bg-white/10  border-[.5px] border-orange-400 rounded-lg flex flex-col justify-between py-2 px-2">
+      <div className="min-h-[70%] w-[75%] sm:h-[26rem] sm:w-96 sm:px-3 bg-white/10  border-[.5px] border-orange-400 rounded-lg flex flex-col justify-between py-2 px-2">
         <div className="px-2 py-3 flex items-center justify-between">
           <h1 className="text-xl font-medium">
             {loginForm ? "Login" : "Sign up"}
@@ -126,6 +127,7 @@ const LoginCard = (props) => {
             className="text-2xl"
           />
         </div>
+
         {loginForm ? (
           <form className="px-6 flex flex-col gap-2" onSubmit={toLogin}>
             <div className="flex flex-col gap-1">
@@ -172,6 +174,7 @@ const LoginCard = (props) => {
           </form>
         ) : (
           <form className="px-6 flex flex-col gap-2" onSubmit={toSingUP}>
+            <p className="text-xs text-orange-500 font-medium">You can use dummy data for sing up</p>
             <div className="flex flex-col gap-1">
               <label htmlFor="username" className="text-sm">
                 Username *

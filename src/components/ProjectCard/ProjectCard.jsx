@@ -101,7 +101,7 @@ const ProjectCard = (props) => {
           </div>
         </div>
       </motion.li>
-      {showLogin && <LoginCard close={setShowLogin} />}
+      {showLogin && <LoginCard reload={reload} close={setShowLogin} />}
     </>
   );
 };
