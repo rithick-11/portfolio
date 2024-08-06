@@ -107,7 +107,6 @@ const LoginCard = (props) => {
         errMsg: data.msg,
       }));
     }
-    console.log(loginFormData);
   };
 
   return (

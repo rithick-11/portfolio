@@ -57,7 +57,7 @@ const Navbar = () => {
     }
   };
 
-  const navItems = ["home", "about", "education", "skills", "project"];
+  const navItems = ["home", "about", "education", "skills", "project", "contact"];
   return (
     <motion.div
       variants={{ visable: { y: 0 }, hide: { y: "-100%" } }}
