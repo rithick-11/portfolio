@@ -4,11 +4,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <link rel="icon" href="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1680781580/rithickImg.jpg" />
+    <link
+      rel="icon"
+      href="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1680781580/rithickImg.jpg"
+    />
+    <script>
+      const domainUrl = {
+        loaclHost: "http://localhost:3010",
+        cloud: "https://portfolio-server-9ly0.onrender.com",
+      };
+      fetch(`${domainUrl.cloud}/user/count`);
+    </script>
     <title>Rithick | Portfolio</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root"></div> 
   </body>
 </html>

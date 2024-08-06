@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { MdCancel } from "react-icons/md";
+import { ColorRing} from "react-loader-spinner";
+import {motion} from "framer-motion"
 
 const formDataInit = {
   username: "",
@@ -9,11 +11,24 @@ const formDataInit = {
   password: "",
 };
 
+const apiStatusconstan = {
+  initial: "intial",
+  loading: "loading",
+  success: "success",
+  fail: "fail",
+  errMsg: "",
+};
+
+const apiStateInit = {
+  status: apiStatusconstan.initial,
+  errMsg: "",
+};
+
 const LoginCard = (props) => {
   const { close } = props;
 
   const [loginForm, setLoginForm] = useState(false);
-  const [msg, setMsg] = useState("");
+  const [apiRes, setApiRes] = useState(apiStateInit);
   const [loginFormData, setLoginFormData] = useState(formDataInit);
 
   const handleLoginForm = (e) => {
@@ -29,6 +44,7 @@ const LoginCard = (props) => {
 
   const toSingUP = async (e) => {
     e.preventDefault();
+    setApiRes((prev) => ({ ...prev, status: apiStatusconstan.loading }));
     const signUpApiUrl = `${domainUrl.cloud}/user/singup`;
     const option = {
       method: "POST",
@@ -44,14 +60,23 @@ const LoginCard = (props) => {
     if (res.status === 200) {
       Cookies.set("user_token", data.token, { expires: 7 });
       setLoginForm(true);
-      setMsg(data.msg);
+      setApiRes((prev) => ({
+        ...prev,
+        status: apiStatusconstan.success,
+        errMsg: data.msg,
+      }));
     } else if (res.status === 401) {
-      setMsg(data.msg);
+      setApiRes((prev) => ({
+        ...prev,
+        status: apiStatusconstan.fail,
+        errMsg: data.msg,
+      }));
     }
   };
 
   const toLogin = async (e) => {
     e.preventDefault();
+    setApiRes((prev) => ({ ...prev, status: apiStatusconstan.loading }));
 
     const loginApi = `${domainUrl.cloud}/user/login`;
     const option = {
@@ -69,16 +94,27 @@ const LoginCard = (props) => {
     const data = await res.json();
     if (res.status === 200) {
       Cookies.set("user_token", data.token, { expires: 2 });
-      setMsg(data.msg);
+      setApiRes((prev) => ({
+        ...prev,
+        status: apiStatusconstan.success,
+        errMsg: data.msg,
+      }));
       close(false);
     } else if (res.status === 404) {
-      setMsg(data.msg);
+      setApiRes((prev) => ({
+        ...prev,
+        status: apiStatusconstan.fail,
+        errMsg: data.msg,
+      }));
     }
     console.log(loginFormData);
   };
 
   return (
-    <section className="fixed h-screen w-screen top-0 right-0 left-0 bg-black/65 flex items-center justify-center z-30 backdrop-blur-sm">
+    <motion.section
+      initial={{x:"100%"}}
+      animate={{x:0}}
+      className="fixed h-screen w-screen top-0 right-0 left-0 bg-black/65 flex items-center justify-center z-30 backdrop-blur-sm">
       <div className="h-[70%] w-[75%] sm:h-[26rem] sm:w-96 sm:px-3 bg-white/10  border-[.5px] border-orange-400 rounded-lg flex flex-col justify-between py-2 px-2">
         <div className="px-2 py-3 flex items-center justify-between">
           <h1 className="text-xl font-medium">
@@ -123,8 +159,16 @@ const LoginCard = (props) => {
                 className="text-sxl px-[12px] py-[4px] outline-none rounded-md bg-black/50"
               />
             </div>
-            <button className="bg-orange-500 text-md  py-[2px] font-medium rounded-md self-start mt-4 px-2">
-              {loginForm ? "Login" : "Join with us"}
+            <button className="bg-orange-500 text-md flex items-center  py-[2px] font-medium rounded-md self-start mt-4 px-2">
+              Login
+              {apiRes.status === apiStatusconstan.loading && (
+                <ColorRing
+                  height="18"
+                  width="18"
+                  ariaLabel="color-ring-loading"
+                  colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+                />
+              )}
             </button>
           </form>
         ) : (
@@ -189,25 +233,42 @@ const LoginCard = (props) => {
                 className="text-sxl px-[12px] py-[4px] outline-none rounded-md bg-black/50"
               />
             </div>
-            <button className="bg-orange-500 text-md  py-[2px] font-medium rounded-md self-start mt-4 px-2">
-              Join with me
+            <button className="bg-orange-500 text-md flex items-center py-[2px] font-medium rounded-md self-start mt-4 px-2">
+              Sign Up
+              {apiRes.status === apiStatusconstan.loading && (
+                <ColorRing
+                  height="18"
+                  width="18"
+                  ariaLabel="color-ring-loading"
+                  colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+                />
+              )}
             </button>
           </form>
         )}
+
         <div className="px-2 py-3 flex items-center justify-between">
-          <p className="text-sm font-thin">{msg}</p>
+          <p
+            className={`text-sm font- ${
+              apiRes.status === apiStatusconstan.success
+                ? "text-blue-500"
+                : "text-[#FF0000]"
+            }`}
+          >
+            {apiRes.status === apiStatusconstan.fail && "*"}{apiRes.errMsg}
+          </p>
           <button
             onClick={() => {
               setLoginForm((pre) => !pre);
               setLoginFormData(formDataInit);
-              setMsg("");
+              setApiRes(apiStateInit);
             }}
           >
             {loginForm ? "Sign Up" : "Login"}
           </button>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

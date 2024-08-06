@@ -1,20 +1,40 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Cookies from "js-cookie";
-import { FaRegHeart } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import LoginCard from "../LoginCard/LoginCard";
+import { ColorRing } from "react-loader-spinner";
 
-const domainUrl = {loaclHost:"http://localhost:3010", cloud:"https://portfolio-server-9ly0.onrender.com"};
+const domainUrl = {
+  loaclHost: "http://localhost:3010",
+  cloud: "https://portfolio-server-9ly0.onrender.com",
+};
+
+const apiStatusconstan = {
+  initial: "intial",
+  loading: "loading",
+  success: "success",
+  fail: "fail",
+  errMsg: "",
+};
+
+const likeApiConstans = {
+  status: apiStatusconstan.initial,
+  resMsg: "",
+};
 
 const ProjectCard = (props) => {
-  const { each, i } = props;
+  const { each, i, reload } = props;
 
   const [showLogin, setShowLogin] = useState(false);
+  const [likeApiState, setLikeState] = useState(likeApiConstans);
 
   const addLikeToProject = async (pId) => {
     if (Cookies.get("user_token") === undefined) {
       setShowLogin(true);
     } else {
+      setLikeState((pre) => ({ ...pre, status: apiStatusconstan.loading }));
       console.log(pId);
       const addLikeApi = `${domainUrl.cloud}/user//add/like-project/${pId}`;
       const option = {
@@ -25,7 +45,13 @@ const ProjectCard = (props) => {
       };
       const res = await fetch(addLikeApi, option);
       const data = await res.json();
-      console.log(data);
+      if (res.status === 200) {
+        setLikeState({ status: apiStatusconstan.success, resMsg: data.msg });
+      } else if (
+        setLikeState({ status: apiStatusconstan.fail, resMsg: data.msg })
+      )
+      toast(data.msg);
+      reload();
     }
   };
 
@@ -51,14 +77,27 @@ const ProjectCard = (props) => {
               Vist
             </button>
           </a>
-          <div className="flex items-center gap-2">
-            <FaRegHeart
-              onClick={() => {
-                addLikeToProject(each._id);
-              }}
-              className="text-xl cursor-pointer"
-            />
-            <p>{each.likeCount}</p>
+          <div className="flex gap-2 items-center">
+            {likeApiState.status === apiStatusconstan.loading ? (
+              <ColorRing
+                height="18"
+                width="18"
+                ariaLabel="color-ring-loading"
+                colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+              />
+            ) : (
+              <span
+                onClick={() => {
+                  addLikeToProject(each._id);
+                }}
+                className={`text-xl cursor-pointer ${
+                  each.isLiked && "text-orange-500"
+                }`}
+              >
+                {each.isLiked ? <FaHeart /> : <FaRegHeart />}
+              </span>
+            )}
+            <p className="text-sm">{each.likes}</p>
           </div>
         </div>
       </motion.li>
