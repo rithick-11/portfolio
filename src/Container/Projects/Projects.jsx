@@ -38,7 +38,6 @@ const Projects = () => {
   };
 
   useEffect(() => {
-    console.log("called");
     getProject();
   }, []);
 
