@@ -39,9 +39,15 @@ const Navbar = () => {
           Authoriaztion: `Bearer ${Cookies.get("user_token")}`,
         },
       };
+      try{
+        
       const res = await fetch(url, option);
       const user = await res.json();
       setUser(user);
+      }catch(err){
+        console.log("cannot fetch user data")
+        setUser({ name: "user", username: "" })
+      }
     }
   };
 
@@ -107,7 +113,7 @@ const Navbar = () => {
                 onClick={toLogOut}
               >
                 <span className="flex items-center gap-1 justify-center">
-                  {user.name.slice(0, 7)} <IoIosLogOut />
+                  {user.name} <IoIosLogOut />
                 </span>
               </button>
             ) : (
