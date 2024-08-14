@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { MdCancel } from "react-icons/md";
-import { ColorRing} from "react-loader-spinner";
-import {motion} from "framer-motion"
+import { ColorRing } from "react-loader-spinner";
+import { motion } from "framer-motion";
+import { toast } from "sonner";
 
 const formDataInit = {
   username: "",
@@ -65,12 +66,14 @@ const LoginCard = (props) => {
         status: apiStatusconstan.success,
         errMsg: data.msg,
       }));
+      toast.success(data.msg)
     } else if (res.status === 401) {
       setApiRes((prev) => ({
         ...prev,
         status: apiStatusconstan.fail,
         errMsg: data.msg,
       }));
+      toast.warning(data.msg)
     }
   };
 
@@ -100,21 +103,45 @@ const LoginCard = (props) => {
         errMsg: data.msg,
       }));
       close(false);
-      reload()
+      toast.success(data.msg);
+      reload();
     } else if (res.status === 404) {
       setApiRes((prev) => ({
         ...prev,
         status: apiStatusconstan.fail,
         errMsg: data.msg,
       }));
+      toast.warning(data.msg);
+    }
+  };
+
+  const toLoginAsGuest = async () => {
+    setApiRes((prev) => ({ ...prev, status: apiStatusconstan.loading }));
+    const url = `${domainUrl.cloud}/user/add-guest`;
+    const option = {
+      method: "POST",
+    };
+    try {
+      const res = await fetch(url, option);
+      const data = await res.json();
+      toast.success(data.msg);
+      setLoginFormData(data.guest);
+      setApiRes((prev) => ({ ...prev, status: apiStatusconstan.success }));
+    } catch (err) {
+      toast.warning("cannot connect to server");
+      setApiRes((prev) => ({
+        ...prev,
+        status: apiStatusconstan.fail,
+      }));
     }
   };
 
   return (
     <motion.section
-      initial={{x:"100%"}}
-      animate={{x:0}}
-      className="fixed h-screen w-screen top-0 right-0 left-0 bg-black/65 flex items-center justify-center z-30 backdrop-blur-sm">
+      initial={{ x: "100%" }}
+      animate={{ x: 0 }}
+      className="fixed h-screen w-screen top-0 right-0 left-0 bg-black/65 flex items-center justify-center z-30 backdrop-blur-sm"
+    >
       <div className="min-h-[70%] w-[75%] sm:h-[26rem] sm:w-96 sm:px-3 bg-white/10  border-[.5px] border-orange-400 rounded-lg flex flex-col justify-between py-2 px-2">
         <div className="px-2 py-3 flex items-center justify-between">
           <h1 className="text-xl font-medium">
@@ -174,7 +201,9 @@ const LoginCard = (props) => {
           </form>
         ) : (
           <form className="px-6 flex flex-col gap-2" onSubmit={toSingUP}>
-            <p className="text-xs text-orange-500 font-medium">You can use dummy data for sing up</p>
+            <p className="text-xs text-orange-500 font-medium">
+              You can use dummy data for sing up
+            </p>
             <div className="flex flex-col gap-1">
               <label htmlFor="username" className="text-sm">
                 Username *
@@ -235,30 +264,27 @@ const LoginCard = (props) => {
                 className="text-sxl px-[12px] py-[4px] outline-none rounded-md bg-black/50"
               />
             </div>
-            <button className="bg-orange-500 text-md flex items-center py-[2px] font-medium rounded-md self-start mt-4 px-2">
-              Sign Up
-              {apiRes.status === apiStatusconstan.loading && (
-                <ColorRing
-                  height="18"
-                  width="18"
-                  ariaLabel="color-ring-loading"
-                  colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
-                />
-              )}
-            </button>
+            <div className="flex gap-2 items-center mt-5">
+              <button className="bg-orange-500 text-md flex items-center py-[2px] font-medium rounded-md self-start  px-2">
+                Sign Up
+                {apiRes.status === apiStatusconstan.loading && (
+                  <ColorRing
+                    height="18"
+                    width="18"
+                    ariaLabel="color-ring-loading"
+                    colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+                  />
+                )}
+              </button>
+              <button type="button" onClick={toLoginAsGuest} className="text-sm text-blue-300 font-medium">
+                Get Dummy data
+              </button>
+            </div>
           </form>
         )}
 
         <div className="px-2 py-3 flex items-center justify-between">
-          <p
-            className={`text-sm font- ${
-              apiRes.status === apiStatusconstan.success
-                ? "text-blue-500"
-                : "text-[#FF0000]"
-            }`}
-          >
-            {apiRes.status === apiStatusconstan.fail && "*"}{apiRes.errMsg}
-          </p>
+          <p></p>
           <button
             onClick={() => {
               setLoginForm((pre) => !pre);
