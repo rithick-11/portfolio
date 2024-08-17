@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { HiBars3BottomRight } from "react-icons/hi2";
-import Cookies from "js-cookie";
-import { IoIosLogOut } from "react-icons/io";
+
 import { RxCrossCircled } from "react-icons/rx";
 import LoginCard from "../LoginCard/LoginCard";
+import UserData from "../UserData/UserData";
 
 const Navbar = () => {
   const { scrollY } = useScroll();
 
   const [toggle, setToggle] = useState(false);
   const [navShow, setNavShow] = useState(true);
-  const [isLogin, setIsLogin] = useState(
-    Cookies.get("user_token") !== undefined
-  );
-  const [user, setUser] = useState({ name: "user", username: "" });
   const [showLogin, setShowLogin] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (last) => {
@@ -24,57 +20,7 @@ const Navbar = () => {
       setNavShow(true);
     }
   });
-
-  const domainUrl = {
-    loaclHost: "http://localhost:3010",
-    cloud: "https://portfolio-server-9ly0.onrender.com",
-  };
-
-  const getUserData = async () => {
-    if (Cookies.get("user_token") !== undefined) {
-      const url = `${domainUrl.cloud}/user/data`;
-      const option = {
-        method: "get",
-        headers: {
-          Authoriaztion: `Bearer ${Cookies.get("user_token")}`,
-        },
-      };
-      try{
-        
-      const res = await fetch(url, option);
-      const user = await res.json();
-      setUser(user);
-      }catch(err){
-        console.log("cannot fetch user data")
-        setUser({ name: "user", username: "" })
-      }
-    }
-  };
-
-  const logInSuccess = () => {
-    setIsLogin(true)
-    getUserData()
-  }
-
-
-
-
-  useEffect(() => {
-    getUserData();
-  }, []);
-
-
-  const toLogOut = () => {
-    Cookies.remove("user_token");
-    setIsLogin(false);
-  }
-
-  const toLogIn =  () => {
-    setShowLogin(true)
-  }
-
   
-
   const navItems = [
     "home",
     "about",
@@ -107,24 +53,7 @@ const Navbar = () => {
               </l1>
             ))}
           </ul>
-          {isLogin ? (
-              <button
-                className="px-2 py-1 bg-orange-500 rounded-full text-md font-bolder border-2  hover:scale-105"
-                onClick={toLogOut}
-              >
-                <span className="flex items-center gap-1 justify-center">
-                  {user.name} <IoIosLogOut />
-                </span>
-              </button>
-            ) : (
-              <button
-                className="px-2 py-1 bg-orange-500 rounded-full text-md font-bolder border-2  hover:scale-105"
-                // onClick={tohandleLogInOut}
-                onClick={toLogIn}
-              >
-                Login
-              </button>
-            )}
+          <UserData setShowLogin={setShowLogin} />
         </div>
         {toggle ? (
           <RxCrossCircled
@@ -166,24 +95,7 @@ const Navbar = () => {
                 </l1>
               ))}
             </ul>
-            {isLogin ? (
-              <button
-                className="px-2 py-1 bg-orange-500 rounded-full text-md font-bolder border-2  hover:scale-105"
-                onClick={toLogOut}
-              >
-                <span className="flex items-center gap-1 justify-center">
-                  {user.name.slice(0, 7)} <IoIosLogOut />
-                </span>
-              </button>
-            ) : (
-              <button
-                className="px-2 py-1 bg-orange-500 rounded-full text-md font-bolder border-2  hover:scale-105"
-                // onClick={tohandleLogInOut}
-                onClick={toLogIn}
-              >
-                Login
-              </button>
-            )}
+            <UserData setShowLogin={setShowLogin} />
           </motion.div>
         )}
       </nav>
@@ -192,7 +104,6 @@ const Navbar = () => {
           close={() => {
             setShowLogin(false);
           }}
-          reload={logInSuccess}
         />
       )}
     </motion.div>

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Cookies from "js-cookie";
-import { toast } from "react-toastify";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-import LoginCard from "../LoginCard/LoginCard";
+import { toast } from "sonner";
 import { ColorRing } from "react-loader-spinner";
+
+import LoginCard from "../LoginCard/LoginCard";
 
 const domainUrl = {
   loaclHost: "http://localhost:3010",
@@ -25,17 +26,17 @@ const likeApiConstans = {
 };
 
 const ProjectCard = (props) => {
-  const { each, i, reload } = props;
+  const { data, i } = props;
 
   const [showLogin, setShowLogin] = useState(false);
   const [likeApiState, setLikeState] = useState(likeApiConstans);
+  const [each, setEach] = useState(data)
 
   const addLikeToProject = async (pId) => {
     if (Cookies.get("user_token") === undefined) {
       setShowLogin(true);
     } else {
       setLikeState((pre) => ({ ...pre, status: apiStatusconstan.loading }));
-      console.log(pId);
       const addLikeApi = `${domainUrl.cloud}/user//add/like-project/${pId}`;
       const option = {
         method: "PUT",
@@ -47,11 +48,12 @@ const ProjectCard = (props) => {
       const data = await res.json();
       if (res.status === 200) {
         setLikeState({ status: apiStatusconstan.success, resMsg: data.msg });
-      } else if (
+        setEach((pre) => ({...pre, likes: data.likeCount,isLiked: true }))
+        toast.success(data.msg);
+      } else if (res.status === 404) {
         setLikeState({ status: apiStatusconstan.fail, resMsg: data.msg })
-      )
-      toast(data.msg);
-      reload();
+        toast.success(data.msg);
+      }
     }
   };
 
@@ -101,7 +103,7 @@ const ProjectCard = (props) => {
           </div>
         </div>
       </motion.li>
-      {showLogin && <LoginCard reload={reload} close={setShowLogin} />}
+      {showLogin && <LoginCard close={setShowLogin} />}
     </>
   );
 };

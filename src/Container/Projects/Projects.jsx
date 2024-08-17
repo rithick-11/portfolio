@@ -1,45 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
 import { motion } from "framer-motion";
-import Cookies from "js-cookie";
 
-import { mrProjectList } from "../../Asserts/content";
+
 import Tittle from "../../components/Tittle/Tittle";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
 import { DotLoader } from "react-spinners";
 
-const domainUrl = {
-  loaclHost: "http://localhost:3010",
-  cloud: "https://portfolio-server-9ly0.onrender.com",
-};
+import PortfolioContext from "../../Context/PortfolioContext";
 
 const Projects = () => {
   const [page, setPage] = useState(2);
-  const [projectStatus, setProjectStatus] = useState({
-    isLoading: false,
-    projectList: [],
-  });
-
-  const getProject = async () => {
-    setProjectStatus((pre) => ({ ...pre, isLoading: true }));
-    const url = `${domainUrl.cloud}/user/project`;
-    const option = {
-      method: "get",
-      headers: {
-        Authoriaztion: `Bearer ${Cookies.get("user_token")}`,
-      },
-    };
-    try {
-      const res = await fetch(url, option);
-      const projectList = await res.json();
-      setProjectStatus({ isLoading: false, projectList });
-    } catch (err) {
-      setProjectStatus({ isLoading: false, projectList: mrProjectList });
-    }
-  };
-
-  useEffect(() => {
-    getProject();
-  }, []);
+  const {projectListState} = useContext(PortfolioContext)
 
   return (
     <section id="project" className="min-h-screen pb-10 pt-[5.5rem]">
@@ -51,19 +22,18 @@ const Projects = () => {
       >
         Design. Develop. Deliver.
       </motion.h1>
-      {projectStatus.isLoading ? (
+      {projectListState.isLoading ? (
         <div className="flex items-center justify-center h-[70vh]">
           <DotLoader color="#F97316" />
         </div>
       ) : (
         <>
           <ul className="flex flex-wrap gap-8 justify-center mb-5">
-            {projectStatus.projectList.slice(0, page).map((each, i) => (
+            {projectListState.projectList.slice(0, page).map((each, i) => (
               <ProjectCard
-                each={each}
+                data={each}
                 key={each._id}
                 i={i}
-                reload={getProject}
               />
             ))}
           </ul>
@@ -75,11 +45,11 @@ const Projects = () => {
               className="inline-flex mx-auto h-full animate-background-shine cursor-pointer items-center justify-center rounded-full border border-gray-800 bg-[linear-gradient(110deg,#000,45%,#4D4B4B,55%,#000)] bg-[length:250%_100%] px-3 py-1 text-md font-medium text-gray-300"
               onClick={() =>
                 setPage((pre) =>
-                  pre < projectStatus.projectList.length ? pre + 2 : pre - 2
+                  pre < projectListState.projectList.length ? pre + 2 : pre - 2
                 )
               }
             >
-              {page > projectStatus.projectList.length ? "Less..." : "Show..."}
+              {page > projectListState.projectList.length ? "Less..." : "Show..."}
             </motion.button>
           </div>
         </>

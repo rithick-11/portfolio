@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Cookies from "js-cookie";
 import { MdCancel } from "react-icons/md";
 import { ColorRing } from "react-loader-spinner";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+
+import PortfolioContext from "../../Context/PortfolioContext";
 
 const formDataInit = {
   username: "",
@@ -26,7 +28,9 @@ const apiStateInit = {
 };
 
 const LoginCard = (props) => {
-  const { close, reload } = props;
+  const { close } = props;
+
+  const {getProjectList, getUserData} = useContext(PortfolioContext)
 
   const [loginForm, setLoginForm] = useState(false);
   const [apiRes, setApiRes] = useState(apiStateInit);
@@ -104,7 +108,8 @@ const LoginCard = (props) => {
       }));
       close(false);
       toast.success(data.msg);
-      reload();
+      getProjectList()
+      getUserData()
     } else if (res.status === 404) {
       setApiRes((prev) => ({
         ...prev,
