@@ -45,12 +45,13 @@ const LoginCard = (props) => {
   const domainUrl = {
     loaclHost: "http://localhost:3010",
     cloud: "https://portfolio-server-9ly0.onrender.com",
+    vercel:"https://portfolio-server-pink-seven.vercel.app"
   };
 
   const toSingUP = async (e) => {
     e.preventDefault();
     setApiRes((prev) => ({ ...prev, status: apiStatusconstan.loading }));
-    const signUpApiUrl = `${domainUrl.cloud}/user/singup`;
+    const signUpApiUrl = `${domainUrl.vercel}/user/singup`;
     const option = {
       method: "POST",
       body: JSON.stringify(loginFormData),
@@ -85,7 +86,7 @@ const LoginCard = (props) => {
     e.preventDefault();
     setApiRes((prev) => ({ ...prev, status: apiStatusconstan.loading }));
 
-    const loginApi = `${domainUrl.cloud}/user/login`;
+    const loginApi = `${domainUrl.vercel}/user/login`;
     const option = {
       method: "POST",
       body: JSON.stringify({
@@ -122,7 +123,7 @@ const LoginCard = (props) => {
 
   const toLoginAsGuest = async () => {
     setApiRes((prev) => ({ ...prev, status: apiStatusconstan.loading }));
-    const url = `${domainUrl.cloud}/user/add-guest`;
+    const url = `${domainUrl.vercel}/user/add-guest`;
     const option = {
       method: "POST",
     };

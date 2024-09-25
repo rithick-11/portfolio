@@ -14,6 +14,7 @@ const formDataInit = {
 const domainUrl = {
   loaclHost: "http://localhost:3010",
   cloud: "https://portfolio-server-9ly0.onrender.com",
+  vercel:"https://portfolio-server-pink-seven.vercel.app"
 };
 
 const apiStatusconstan = {
@@ -43,7 +44,7 @@ const Contact = () => {
   const handelSubmit = async (e) => {
     e.preventDefault();
     setApiRes((prev) => ({ ...prev, status: apiStatusconstan.loading }));
-    const apiUrl = `${domainUrl.cloud}/user/contact`;
+    const apiUrl = `${domainUrl.vercel}/user/contact`;
     const option = {
       method: "POST",
       headers: {

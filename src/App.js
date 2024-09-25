@@ -17,6 +17,7 @@ import { mrProjectList } from "./Asserts/content";
 const domainUrl = {
   loaclHost: "http://localhost:3010",
   cloud: "https://portfolio-server-9ly0.onrender.com",
+  vercel:"https://portfolio-server-pink-seven.vercel.app"
 };
 
 const App = () => {
@@ -48,7 +49,7 @@ const App = () => {
 
   const getProjectList = async () => {
     setProjectList((pre) => ({ ...pre, isLoading: true }));
-    const url = `${domainUrl.cloud}/user/project`;
+    const url = `${domainUrl.vercel}/user/project`;
     const option = {
       method: "get",
       headers: {
