@@ -35,7 +35,7 @@ const Home = () => {
         <span className="text-sm">
           <Typewriter
             options={{
-              strings: ["MERN Stack developer", "Cyber Security Student"],
+              strings: ["MERN Stack developer", "Cyber Security enthusiast", "Develop something"],
               autoStart: true,
               loop: true,
             }}
@@ -46,7 +46,7 @@ const Home = () => {
         <motion.img
           whileInView={{ opacity: [0, 1], scale: [0.9, 1] }}
           transition={{ duration: 1.5 }}
-          src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1680781580/rithickImg.jpg"
+          src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1732556561/file_jzft2d.jpg"
           alt="profile img"
           className="h-[200px] md:h-[260px] rounded-full"
         />

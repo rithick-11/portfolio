@@ -40,7 +40,7 @@ const Navbar = () => {
         <div className="text-2xl font-medium">
           Rithic<span>K</span>
         </div>
-        <div className="hidden md:flex flex-[.75] justify-evenly uppercase ">
+        <div className="hidden lg:flex flex-[.75] justify-evenly uppercase ">
           <ul className="flex items-center">
             {navItems.map((items, i) => (
               <l1
@@ -57,14 +57,14 @@ const Navbar = () => {
         </div>
         {toggle ? (
           <RxCrossCircled
-            className="text-2xl font-bold mr-3 md:hidden"
+            className="text-2xl font-bold mr-3 lg:hidden"
             onClick={() => {
               setToggle(false);
             }}
           />
         ) : (
           <HiBars3BottomRight
-            className="text-2xl font-bold mr-3 md:hidden"
+            className="text-2xl font-bold mr-3 lg:hidden"
             onClick={() => {
               setToggle(true);
             }}
@@ -74,7 +74,7 @@ const Navbar = () => {
           <motion.div
             initial={{ opacity: 0, x: "100%" }}
             animate={{ opacity: 1, x: 0 }}
-            className="absolute flex flex-col uppercase top-0 right-5 bg-black/80 px-8 py-10 mt-16 gap-5 text-right border-[1px] border-white backdrop-blur rounded-lg md:hidden"
+            className="absolute flex flex-col uppercase top-0 right-5 bg-black/80 px-8 py-10 mt-16 gap-5 text-right border-[1px] border-white backdrop-blur rounded-lg lg:hidden"
           >
             <ul className="flex flex-col gap-4">
               {navItems.map((items, i) => (

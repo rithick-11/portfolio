@@ -1,11 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { MdCancel } from "react-icons/md";
 import { ColorRing } from "react-loader-spinner";
 import { motion } from "framer-motion";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
-import PortfolioContext from "../../Context/PortfolioContext";
+import apiServer from "../../lib/apiServer";
+import useDataStore from "../../store/useDataStore";
 
 const formDataInit = {
   username: "",
@@ -30,11 +31,11 @@ const apiStateInit = {
 const LoginCard = (props) => {
   const { close } = props;
 
-  const {getProjectList, getUserData} = useContext(PortfolioContext)
-
   const [loginForm, setLoginForm] = useState(false);
   const [apiRes, setApiRes] = useState(apiStateInit);
   const [loginFormData, setLoginFormData] = useState(formDataInit);
+
+  const { getProject, getUserData } = useDataStore();
 
   const handleLoginForm = (e) => {
     const name = e.target.name;
@@ -42,28 +43,11 @@ const LoginCard = (props) => {
     setLoginFormData((pre) => ({ ...pre, [name]: value }));
   };
 
-  const domainUrl = {
-    loaclHost: "http://localhost:3010",
-    cloud: "https://portfolio-server-9ly0.onrender.com",
-    vercel:"https://portfolio-server-pink-seven.vercel.app"
-  };
-
   const toSingUP = async (e) => {
     e.preventDefault();
     setApiRes((prev) => ({ ...prev, status: apiStatusconstan.loading }));
-    const signUpApiUrl = `${domainUrl.vercel}/user/singup`;
-    const option = {
-      method: "POST",
-      body: JSON.stringify(loginFormData),
-      headers: {
-        "Content-type": "application/json",
-      },
-    };
-
-    const res = await fetch(signUpApiUrl, option);
-    const data = await res.json();
-    console.log(res);
-    if (res.status === 200) {
+    try {
+      const { data } = await apiServer.post("/user/singup", loginFormData);
       Cookies.set("user_token", data.token, { expires: 7 });
       setLoginForm(true);
       setApiRes((prev) => ({
@@ -71,70 +55,56 @@ const LoginCard = (props) => {
         status: apiStatusconstan.success,
         errMsg: data.msg,
       }));
-      toast.success(data.msg)
-    } else if (res.status === 401) {
+      toast.success(data.msg);
+    } catch (err) {
+      console.log(err);
       setApiRes((prev) => ({
         ...prev,
         status: apiStatusconstan.fail,
-        errMsg: data.msg,
+        errMsg: err.response.data.msg,
       }));
-      toast.warning(data.msg)
+      toast.error(err.response.data.msg);
     }
   };
 
   const toLogin = async (e) => {
     e.preventDefault();
     setApiRes((prev) => ({ ...prev, status: apiStatusconstan.loading }));
-
-    const loginApi = `${domainUrl.vercel}/user/login`;
-    const option = {
-      method: "POST",
-      body: JSON.stringify({
+    try {
+      const res = await apiServer.post("/user/login", {
         username: loginFormData.username,
         password: loginFormData.password,
-      }),
-      headers: {
-        "Content-type": "application/json",
-      },
-    };
-
-    const res = await fetch(loginApi, option);
-    const data = await res.json();
-    if (res.status === 200) {
-      Cookies.set("user_token", data.token, { expires: 2 });
+      });
+      Cookies.set("user_token", res.data.token, { expires: 2 });
       setApiRes((prev) => ({
         ...prev,
         status: apiStatusconstan.success,
-        errMsg: data.msg,
+        errMsg: res.data.msg,
       }));
       close(false);
-      toast.success(data.msg);
-      getProjectList()
-      getUserData()
-    } else if (res.status === 404) {
+      getProject();
+      getUserData();
+      toast.success(res.data.msg);
+    } catch (err) {
+      console.log(err);
       setApiRes((prev) => ({
         ...prev,
         status: apiStatusconstan.fail,
-        errMsg: data.msg,
+        errMsg: err.response.data.msg,
       }));
-      toast.warning(data.msg);
+      toast.error(err.response.data.msg);
     }
   };
 
   const toLoginAsGuest = async () => {
     setApiRes((prev) => ({ ...prev, status: apiStatusconstan.loading }));
-    const url = `${domainUrl.vercel}/user/add-guest`;
-    const option = {
-      method: "POST",
-    };
     try {
-      const res = await fetch(url, option);
-      const data = await res.json();
+      const { data } = await apiServer.post("/user/add-guest");
       toast.success(data.msg);
       setLoginFormData(data.guest);
       setApiRes((prev) => ({ ...prev, status: apiStatusconstan.success }));
     } catch (err) {
-      toast.warning("cannot connect to server");
+      toast.error("cannot connect to server");
       setApiRes((prev) => ({
         ...prev,
         status: apiStatusconstan.fail,
@@ -282,7 +252,11 @@ const LoginCard = (props) => {
                   />
                 )}
               </button>
-              <button type="button" onClick={toLoginAsGuest} className="text-sm text-blue-300 font-medium">
+              <button
+                type="button"
+                onClick={toLoginAsGuest}
+                className="text-sm text-blue-300 font-medium"
+              >
                 Get Dummy data
               </button>
             </div>

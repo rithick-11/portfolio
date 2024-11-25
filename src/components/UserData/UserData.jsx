@@ -1,39 +1,34 @@
-import { useContext } from "react";
-import Cookies from "js-cookie";
-import { toast } from "sonner";
 import { IoIosLogOut } from "react-icons/io";
 
-import PortfolioContext from "../../Context/PortfolioContext";
+import useDataStore from "../../store/useDataStore";
 
 const UserData = ({ setShowLogin }) => {
-  const { userDetail, getProjectList, getUserData } =
-    useContext(PortfolioContext);
+  const { isAuthenticated, userData, onLogOut } = useDataStore();
 
-  const handelUserBtn = () => {
-    if (Cookies.get("user_token") === undefined) {
-      setShowLogin(true);
-    } else {
-      Cookies.remove("user_token");
-      toast.success("Logout Successfully");
-      getProjectList()
-      getUserData()
-    }
+  console.log(userData);
+
+  const handelUserBtn = async () => {
+    setShowLogin(true);
   };
 
   return (
     <>
-      <button
-        className="px-2 py-1 bg-orange-500 rounded-full text-md font-bolder border-2  hover:scale-105 flex justify-center"
-        onClick={handelUserBtn}
-      >
-        {Cookies.get("user_token") === undefined ? (
-          "Login"
-        ) : (
-          <p className="flex gap-1 items-center">
-            <span>{userDetail.name}</span> <IoIosLogOut />
-          </p>
-        )}
-      </button>
+      {isAuthenticated ? (
+        <button
+          className="px-3 py-1 rounded-md bg-orange-400 font-light hover:bg-orange-500 transition flex items-center justify-center gap-2 text-center"
+          onClick={onLogOut}
+        >
+          <IoIosLogOut className="text-xl" />
+          {userData.name}
+        </button>
+      ) : (
+        <button
+          className="px-3 py-1 rounded-md bg-orange-400 font-light hover:bg-orange-500 transition flex items-center justify-center gap-2 text-center"
+          onClick={handelUserBtn}
+        >
+          Login
+        </button>
+      )}
     </>
   );
 };

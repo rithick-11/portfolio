@@ -2,15 +2,11 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Cookies from "js-cookie";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { ColorRing } from "react-loader-spinner";
 
 import LoginCard from "../LoginCard/LoginCard";
-
-const domainUrl = {
-  loaclHost: "http://localhost:3010",
-  cloud: "https://portfolio-server-9ly0.onrender.com",
-};
+import apiServer from "../../lib/apiServer";
 
 const apiStatusconstan = {
   initial: "intial",
@@ -30,29 +26,32 @@ const ProjectCard = (props) => {
 
   const [showLogin, setShowLogin] = useState(false);
   const [likeApiState, setLikeState] = useState(likeApiConstans);
-  const [each, setEach] = useState(data)
+  const [each, setEach] = useState(data);
 
   const addLikeToProject = async (pId) => {
     if (Cookies.get("user_token") === undefined) {
       setShowLogin(true);
     } else {
       setLikeState((pre) => ({ ...pre, status: apiStatusconstan.loading }));
-      const addLikeApi = `${domainUrl.cloud}/user//add/like-project/${pId}`;
-      const option = {
-        method: "PUT",
-        headers: {
+      try {
+        apiServer.defaults.headers = {
           Authoriaztion: `Bearer ${Cookies.get("user_token")}`,
-        },
-      };
-      const res = await fetch(addLikeApi, option);
-      const data = await res.json();
-      if (res.status === 200) {
-        setLikeState({ status: apiStatusconstan.success, resMsg: data.msg });
-        setEach((pre) => ({...pre, likes: data.likeCount,isLiked: true }))
-        toast.success(data.msg);
-      } else if (res.status === 404) {
-        setLikeState({ status: apiStatusconstan.fail, resMsg: data.msg })
-        toast.success(data.msg);
+        };
+        const res = await apiServer.put(`/user/add/like-project/${pId}`);
+        setLikeState({
+          status: apiStatusconstan.success,
+          resMsg: res.data.msg,
+        });
+        setEach((pre) => ({
+          ...pre,
+          likes: res.data.likeCount,
+          isLiked: true,
+        }));
+        toast.success(res.data.msg);
+      } catch (err) {
+        console.log(err);
+        setLikeState({ status: apiStatusconstan.fail, resMsg: err.response.data.msg });
+        toast.success(err.response.data.msg);
       }
     }
   };
@@ -63,44 +62,52 @@ const ProjectCard = (props) => {
         whileInView={{ opacity: [0, 1], y: [150, 0] }}
         transition={{ duration: 0.35, delay: i * 0.1 }}
         key={each._id}
-        className="w-80 flex flex-col gap-3 p-4 max-h-96 bg-white/10 backdrop-blur-md border-[.5px] border-orange-400 rounded-2xl shadow-xl shadow-white/10"
+        className="p-3 grid grid-cols-7 gap-2 bg-white/10 backdrop-blur-md border-[.5px] border-orange-400 rounded-2xl shadow-xl shadow-white/10"
       >
-        <img
-          src={each.projectImg}
-          alt={each.name}
-          className="h-44 w-72 rounded-md"
-        />
-        <h1 className="text-md font-semibold">{each.name}</h1>
-        <p className="text-sm font-thin">{each.desc.slice(0, 86)}...</p>
-        <div className="flex items-center justify-between">
-          <a href={each.siteLink} target="_blank" rel="noopener noreferrer">
-            <button className="relative my-2 py-1 inline-flex items-center justify-center rounded-md bg-orange-500  px-3 font-medium text-white text-sm transition-colors focus:outline-none ">
-              <div className="absolute -inset-0.5 -z-10 rounded-lg bg-gradient-to-b from-[#c7d2fe] to-[#8678f9] opacity-75 blur" />
-              Vist
-            </button>
-          </a>
-          <div className="flex gap-2 items-center">
-            {likeApiState.status === apiStatusconstan.loading ? (
-              <ColorRing
-                height="18"
-                width="18"
-                ariaLabel="color-ring-loading"
-                colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
-              />
-            ) : (
-              <span
-                onClick={() => {
-                  addLikeToProject(each._id);
-                }}
-                className={`text-xl cursor-pointer ${
-                  each.isLiked && "text-orange-500"
-                }`}
-              >
-                {each.isLiked ? <FaHeart /> : <FaRegHeart />}
-              </span>
-            )}
-            <p className="text-sm">{each.likes}</p>
-          </div>
+        <div className="col-span-7">
+          <img
+            src={each.projectImg}
+            alt={each.name}
+            className="rounded-md w-full aspect-[2/1] "
+          />
+        </div>
+        <h1 className="text-md font-semibold col-span-7">{each.name}</h1>
+        <p className="text-sm font-thin col-span-7">
+          {each.desc.slice(0, 86)}...
+        </p>
+
+        <a
+          href={each.siteLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="col-span-2"
+        >
+          <button className="relative my-2 py-1 inline-flex items-center justify-center rounded-md bg-orange-500  px-3 font-medium text-white text-sm transition-colors focus:outline-none ">
+            <div className="absolute -inset-0 -z-10 rounded-lg bg-gradient-to-b from-[#c7d2fe] to-[#8678f9] opacity-75 blur" />
+            Vist
+          </button>
+        </a>
+        <div className="flex gap-2 items-center justify-end col-span-2 col-start-6">
+          {likeApiState.status === apiStatusconstan.loading ? (
+            <ColorRing
+              height="18"
+              width="18"
+              ariaLabel="color-ring-loading"
+              colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+            />
+          ) : (
+            <span
+              onClick={() => {
+                addLikeToProject(each._id);
+              }}
+              className={`text-xl cursor-pointer ${
+                each.isLiked && "text-orange-500"
+              }`}
+            >
+              {each.isLiked ? <FaHeart /> : <FaRegHeart />}
+            </span>
+          )}
+          <p className="text-sm">{each.likes}</p>
         </div>
       </motion.li>
       {showLogin && <LoginCard close={setShowLogin} />}

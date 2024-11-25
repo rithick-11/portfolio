@@ -120,13 +120,13 @@ const Skills = () => {
           </motion.li>
         ))}
       </ul>
-      <ul className="flex flex-wrap gap-4 sm:gap-6 md:gap-8 justify-around mt-8 md:w-[60%] mx-auto">
+      <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4 md:grid-cols-5 justify-center sm:gap-6 md:gap-8 mt-8 md:w-[60%] mx-auto">
         {fillteredSkills.map((each, i) => (
           <motion.li
             key={each+i}
-            className="h-28 w-28 sm:h-[8rem] sm:w-[8rem] flex flex-col items-center justify-evenly bg-white/10 backdrop-blur-md border-[.5px] border-orange-400 rounded-2xl shadow-xl shadow-white/10"
+            className="h-28 w-28 mx-auto flex flex-col items-center justify-evenly bg-white/10 backdrop-blur-md border-[.5px] border-orange-400 rounded-2xl shadow-xl shadow-white/10"
             whileInView={{ opacity: [0, 1], y:[30,0] }}
-            transition={{ duration: 0.5, delay: i * 0.2 }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
           >
             <motion.img
               animate={{ opacity: [0, 1] }}
