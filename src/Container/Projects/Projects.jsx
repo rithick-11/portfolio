@@ -8,6 +8,7 @@ import { DotLoader } from "react-spinners";
 import useDataStore from "../../store/useDataStore";
 
 const Projects = () => {
+
   const { isProjectLoading, projectList } = useDataStore();
 
   return (
@@ -27,7 +28,7 @@ const Projects = () => {
       ) : (
         <>
           <div className="flex justify-center">
-            <ul className="w-[80vw] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <ul className="flex overflow-y-hidden gap-5 pb-8">
               {projectList.map((each, i) => (
                 <ProjectCard data={each} key={each._id} i={i} />
               ))}
