@@ -12,7 +12,7 @@ const Projects = () => {
   const { isProjectLoading, projectList } = useDataStore();
 
   return (
-    <section id="project" className="min-h-screen pb-10 pt-[5.5rem]">
+    <section id="project" className="pb-10 pt-[5.5rem]">
       <Tittle>Project's</Tittle>
       <motion.h1
         whileInView={{ opacity: [0, 1], x: [10, 0] }}
@@ -28,7 +28,7 @@ const Projects = () => {
       ) : (
         <>
           <div className="flex justify-center">
-            <ul className="flex overflow-y-hidden gap-5 pb-8">
+            <ul className="flex overflow-y-hidden gap-5 px-3 py-8 pb-10 project-list">
               {projectList.map((each, i) => (
                 <ProjectCard data={each} key={each._id} i={i} />
               ))}

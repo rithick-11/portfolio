@@ -22,3 +22,15 @@ body{
   background: orange;
   border-radius: 25px;
 }
+
+.project-list::-webkit-scrollbar{
+  width: 0px;
+  background-color: transparent;
+}
+
+.project-list::-webkit-scrollbar-thumb{
+  border-radius: 5px;
+  height: 1px;
+  width: 4px;
+}
+
