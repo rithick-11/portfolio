@@ -26,7 +26,7 @@ const About = () => {
         </div>
         <div className="hidden md:block col-span-4">
           <motion.img
-            src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1680781580/rithickImg.jpg"
+            src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1738609375/profile_pic_afswaa.jpg"
             className="h-[210px] md:h-[280px] mx-auto border-2 border-orange-500 rounded-2xl backdrop-blur-lg"
             alt="rithck img 2"
             whileInView={{ y: [100, 0], opacity: [0, 0.35, 1], scale:[.2,1]}}

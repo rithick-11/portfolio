@@ -76,7 +76,7 @@ const Contact = () => {
           <motion.img
             whileInView={{x:[30,0]}}
             transition={{duration:.5}}
-            src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1680781580/rithickImg.jpg"
+            src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1738609375/profile_pic_afswaa.jpg"
             alt="profile img-3"
             className="h-44 hidden md:block rounded-full"
           />
