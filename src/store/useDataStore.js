@@ -17,8 +17,6 @@ const useDataStore = create((set) => ({
     };
     try {
       const res = await apiServer.get("/user/project", );
-      console.log(res.data);
-
       set({ projectList: res.data });
     } catch (err) {
       console.log(err);
@@ -51,7 +49,7 @@ const useDataStore = create((set) => ({
 
   countUser: async () => {
     try{
-      const res = await apiServer.get("/user/count")
+      await apiServer.get("/user/count")
     }catch(err){
       console.log(err);
     }

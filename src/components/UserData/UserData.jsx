@@ -5,8 +5,6 @@ import useDataStore from "../../store/useDataStore";
 const UserData = ({ setShowLogin }) => {
   const { isAuthenticated, userData, onLogOut } = useDataStore();
 
-  console.log(userData);
-
   const handelUserBtn = async () => {
     setShowLogin(true);
   };
