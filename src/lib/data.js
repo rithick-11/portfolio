@@ -1,10 +1,12 @@
+const width = 370
+
 export const activitys = [
   {
     Embeded: () => (
       <iframe
         src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7300482736920633345?collapsed=1"
         height="399"
-        width="504"
+        width={width}
         frameborder="0"
         allowfullscreen=""
         title="Embedded post"
@@ -18,7 +20,7 @@ export const activitys = [
       <iframe
         src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7279847625300787200?collapsed=1"
         height="399"
-        width="504"
+        width={width}
         frameborder="0"
         allowfullscreen=""
         title="Embedded post"
@@ -31,7 +33,7 @@ export const activitys = [
       <iframe
         src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7256707922917785600?collapsed=1"
         height="399"
-        width="504"
+        width={width}
         frameborder="0"
         allowfullscreen=""
         title="Embedded post"
@@ -45,7 +47,7 @@ export const activitys = [
       <iframe
         src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7257113544452694016?collapsed=1"
         height="399"
-        width="504"
+        width={width}
         frameborder="0"
         allowfullscreen=""
         title="Embedded post"
@@ -58,7 +60,7 @@ export const activitys = [
       <iframe
         src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7272287087184244736?collapsed=1"
         height="399"
-        width="504"
+        width={width}
         frameborder="0"
         allowfullscreen=""
         title="Embedded post"
@@ -71,7 +73,7 @@ export const activitys = [
       <iframe
         src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7274830450743742464?collapsed=1"
         height="399"
-        width="504"
+        width={width}
         frameborder="0"
         allowfullscreen=""
         title="Embedded post"
@@ -84,7 +86,7 @@ export const activitys = [
       <iframe
         src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7276539228111388672?collapsed=1"
         height="399"
-        width="504"
+        width={width}
         frameborder="0"
         allowfullscreen=""
         title="Embedded post"
