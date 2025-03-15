@@ -17,9 +17,8 @@ const App = () => {
     useDataStore();
 
   useEffect(() => {
-    if (process.env.REACT_APP_MODE !== "dev") {
-      countUser();
-    }
+    console.log(process.env.REACT_APP_MODE);
+    countUser();
   }, []);
 
   useEffect(() => {
