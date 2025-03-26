@@ -11,6 +11,7 @@ import Projects from "./Container/Projects/Projects";
 import useDataStore from "./store/useDataStore";
 import Contact from "./Container/Contact/Contact";
 import ActivitySection from "./components/ActivitySection/ActivitySection";
+import CertificateSection from "./Container/CertificateSection/CertificateSection";
 
 const App = () => {
   const { getProject, getUserData, isAuthenticated, countUser } =
@@ -36,6 +37,7 @@ const App = () => {
         <Skills />
         <Projects />
         <ActivitySection />
+        {/* <CertificateSection /> */}
         <Contact />
       </div>
       <div class="fixed top-0 right-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]" />
