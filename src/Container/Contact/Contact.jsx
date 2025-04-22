@@ -4,6 +4,7 @@ import { FaLinkedinIn, FaInstagram, FaGithub } from "react-icons/fa";
 import { FaXTwitter, FaSnapchat } from "react-icons/fa6";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { ColorRing } from "react-loader-spinner";
+import toast from "react-hot-toast";
 
 const formDataInit = {
   message: "",
@@ -43,6 +44,11 @@ const Contact = () => {
 
   const handelSubmit = async (e) => {
     e.preventDefault();
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(! pattern.test(loginFormData.email)){
+      toast.error("Please enter a valid email address.")
+      return
+    }
     setApiRes((prev) => ({ ...prev, status: apiStatusconstan.loading }));
     const apiUrl = `${domainUrl.vercel}/user/contact`;
     const option = {
@@ -76,9 +82,9 @@ const Contact = () => {
           <motion.img
             whileInView={{x:[30,0]}}
             transition={{duration:.5}}
-            src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1738609375/profile_pic_afswaa.jpg"
+            src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1745361996/profile_pic_v1_jv5lvw.jpg"
             alt="profile img-3"
-            className="h-44 hidden md:block rounded-full"
+            className="h-60 hidden md:block shadow shadow-orange-50 rounded-full"
           />
           <ul className="flex flex-row gap-4  bottom-7 left-0 mx-auto">
             <motion.li
