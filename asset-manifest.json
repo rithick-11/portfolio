@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/portfolio/static/css/main.7368d1a4.css",
-    "main.js": "/portfolio/static/js/main.5a472d6a.js",
+    "main.css": "/portfolio/static/css/main.d397095e.css",
+    "main.js": "/portfolio/static/js/main.3dcf441c.js",
     "static/media/bootstrap.png": "/portfolio/static/media/bootstrap.708c875d1c61bc7e9ec9.png",
     "static/media/react.png": "/portfolio/static/media/react.98a40c0b204c0061e0b8.png",
     "static/media/mangoDB.png": "/portfolio/static/media/mangoDB.de7cb7234e3692cd2a75.png",
@@ -14,12 +14,15 @@
     "static/media/tailwind.png": "/portfolio/static/media/tailwind.b6075e78c4cb74efd675.png",
     "static/media/express.png": "/portfolio/static/media/express.7064278493a4d0b4eefe.png",
     "static/media/sql.png": "/portfolio/static/media/sql.79c124847bad37afc6b3.png",
+    "static/media/revicons.eot": "/portfolio/static/media/revicons.a77de540a38981833f9e.eot",
+    "static/media/revicons.ttf": "/portfolio/static/media/revicons.57fd05d4ae650374c8de.ttf",
+    "static/media/revicons.woff": "/portfolio/static/media/revicons.e8746a624ed098489406.woff",
     "index.html": "/portfolio/index.html",
-    "main.7368d1a4.css.map": "/portfolio/static/css/main.7368d1a4.css.map",
-    "main.5a472d6a.js.map": "/portfolio/static/js/main.5a472d6a.js.map"
+    "main.d397095e.css.map": "/portfolio/static/css/main.d397095e.css.map",
+    "main.3dcf441c.js.map": "/portfolio/static/js/main.3dcf441c.js.map"
   },
   "entrypoints": [
-    "static/css/main.7368d1a4.css",
-    "static/js/main.5a472d6a.js"
+    "static/css/main.d397095e.css",
+    "static/js/main.3dcf441c.js"
   ]
 }
