@@ -19,7 +19,7 @@ const App = () => {
 
   useEffect(() => {
     console.log(process.env.REACT_APP_MODE);
-    countUser();
+    // countUser();
   }, []);
 
   useEffect(() => {

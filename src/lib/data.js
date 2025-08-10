@@ -1,4 +1,4 @@
-const width = 370;
+const width = "100%";
 
 export const activitys = [
   {
