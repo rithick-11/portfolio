@@ -82,7 +82,7 @@ const Contact = () => {
           <motion.img
             whileInView={{ x: [30, 0] }}
             transition={{ duration: 0.5 }}
-            src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1732556561/file_jzft2d.jpg"
+            src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1745361996/profile_pic_v1_jv5lvw.jpg"
             alt="profile img-3"
             className="h-60 hidden md:block shadow shadow-orange-50 rounded-full"
           />
@@ -241,14 +241,14 @@ const Contact = () => {
                   />
                 )}
               </button>
-              {/* <a
+              <a
                 href="https://drive.google.com/file/d/1bUFiwwigsM7nRYTIo5cdXP_ZtwYGDXK7/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="relative my-2 py-1 self-start inline-flex items-center justify-center rounded-md border border-orange-500  px-3 font-medium text-white text-sm transition-colors focus:outline-none "
               >
                 Resume
-              </a> */}
+              </a>
             </div>
             <p
               className={`text-sm font- ${
