@@ -62,13 +62,13 @@ const ProjectCard = (props) => {
         whileInView={{ opacity: [0, 1], y: [150, 0] }}
         transition={{ duration: 0.35, delay: i * 0.1 }}
         key={each._id}
-        className="flex-shrink-0 w-[80%] md:w-[65%] lg:w-[30%] p-3 grid grid-cols-7 gap-2 bg-white/10 backdrop-blur-md border-[.5px] border-orange-400 rounded-2xl shadow-xl shadow-white/10"
+        className="p-3 grid grid-cols-7 mr-2 gap-2 flex-shrink-0 bg-white/10 backdrop-blur-md border-[.5px] border-orange-400 rounded-2xl shadow-xl shadow-white/10"
       >
         <div className="col-span-7">
           <img
             src={each.projectImg}
             alt={each.name}
-            className="rounded-md w-full aspect-[2/1] "
+            className="rounded-md w-full h-44 aspect-[2/1] "
           />
         </div>
         <h1 className="text-md font-semibold col-span-7">{each.name}</h1>
