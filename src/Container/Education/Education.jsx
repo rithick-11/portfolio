@@ -16,12 +16,12 @@ const educationData = [
     location: "Dharmapuri",
     duration: "2019 - 2022",
   },
-  // {
-  //   institute: "Nxtwave",
-  //   course: "MERN Stack development",
-  //   location: "online",
-  //   duration: "2 Years",
-  // },
+  {
+    institute: "Nxtwave",
+    course: "MERN Stack development",
+    location: "online",
+    duration: "2 Years",
+  },
 ];
 
 const Education = () => {

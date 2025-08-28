@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Slider from "react-slick";
 
@@ -11,10 +11,10 @@ import "slick-carousel/slick/slick-theme.css";
 import useDataStore from "../../store/useDataStore";
 
 const Projects = () => {
-  const listRef = useRef();
+  const projectContainer = useRef();
   const { isProjectLoading, projectList } = useDataStore();
-  const [isPaused, setIsPaused] = useState(false);
 
+<<<<<<< HEAD
   var settings = {
     dots: true,
     infinite: true,
@@ -50,6 +50,13 @@ const Projects = () => {
       },
     ],
   };
+=======
+  useEffect(() => {
+    if (projectContainer.current) {
+      console.log(projectContainer.current);
+    }
+  }, []);
+>>>>>>> parent of e2e8a68 (fix issue)
 
   return (
     <section id="project" className="pb-10 pt-[5.5rem]">
@@ -68,7 +75,14 @@ const Projects = () => {
       ) : (
         <>
           <div className="flex justify-center">
+<<<<<<< HEAD
             <ul ref={listRef} className="w-full flex overflow-hidden">
+=======
+            <ul
+              ref={projectContainer}
+              className="flex overflow-y-hidden gap-5 px-3 py-8 pb-10 project-list"
+            >
+>>>>>>> parent of e2e8a68 (fix issue)
               {projectList.map((each, i) => (
                 <ProjectCard data={each} key={each._id} i={i} />
               ))}

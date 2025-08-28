@@ -12,8 +12,8 @@ const About = () => {
   return (
     <section id="about" className="h-auto pb-6 pt-[5.5rem]">
       <Tittle>About </Tittle>
-      <div className="grid grid-cols-12 gap-3">
-        <div className="px-4 mt-8 h-full justify-center flex flex-col md:flex-1 gap-4 col-span-12 md:col-span-9">
+      <div className="grid grid-cols-12 gap-5">
+        <div className="px-4 mt-8 h-full justify-center flex flex-col md:flex-1 gap-4 col-span-12 md:col-span-6">
           {aboutMe.map((each, i) => (
             <motion.p
               key={"id" + i}
@@ -25,7 +25,7 @@ const About = () => {
             </motion.p>
           ))}
         </div>
-        <div className="col-span-12 md:col-span-3 w-[80%] md:w-full mx-auto">
+        <div className="col-span-12 md:col-span-6">
           {/* <motion.img
             src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1738609375/profile_pic_afswaa.jpg"
             className="h-[210px] md:h-[280px] mx-auto border-2 border-orange-500 rounded-2xl backdrop-blur-lg"
@@ -37,7 +37,6 @@ const About = () => {
           <DotLottieReact
             src="https://lottie.host/b1565cf9-d7b3-4ff0-b77f-559b6843d71f/gbhNN8Jvao.lottie"
             loop
-            width={"100%"}
             autoplay
           />
         </div>
