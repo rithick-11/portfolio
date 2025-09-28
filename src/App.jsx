@@ -18,7 +18,7 @@ const App = () => {
     useDataStore();
 
   useEffect(() => {
-    // countUser();
+    countUser();
   }, []);
 
   useEffect(() => {

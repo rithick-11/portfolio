@@ -31,6 +31,18 @@ const apiStateInit = {
   errMsg: "",
 };
 
+const ReportText = () => (
+  <div className="flex items-baseline mt-3 justify-center gap-1">
+    <p className="text-sm font-extralight">If there is any bug, let konw me </p>
+    <a
+      href="mailto:rithickroshan7878@gmail.com"
+      className="text-blue-500 text-xs"
+    >
+      here
+    </a>
+  </div>
+);
+
 const Contact = () => {
   const [showIcon, setShowIcon] = useState(false);
   const [loginFormData, setLoginFormData] = useState(formDataInit);
@@ -78,7 +90,7 @@ const Contact = () => {
         Get In Touch
       </motion.h1>
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 ">
-        <div className="flex flex-grow-1 flex-shrink-0">
+        <div className="flex flex-col items-center gap-5 justify-centerflex-grow-1 flex-shrink-0">
           <motion.form
             whileInView={{ x: [-100, 0] }}
             transition={{ duration: 0.5 }}
@@ -157,6 +169,10 @@ const Contact = () => {
               {apiRes.errMsg}
             </p>
           </motion.form>
+          <span className="md:block hidden">
+            {" "}
+            <ReportText />
+          </span>
         </div>
         <div className="flex flex-col items-center gap-5 justify-center flex-grow-1 flex-shrink-0 ">
           <motion.img
@@ -164,7 +180,7 @@ const Contact = () => {
             transition={{ duration: 0.5 }}
             src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1732556561/file_jzft2d.jpg"
             alt="profile img-3"
-            className="h-60 shadow shadow-orange-50 rounded-full"
+            className="h-60 shadow hidden md:block shadow-orange-50 rounded-full"
           />
           <ul className="flex flex-row gap-4  bottom-7 left-0 mx-auto">
             <motion.li
@@ -251,6 +267,10 @@ const Contact = () => {
               )}
             </motion.li>
           </ul>
+          <span className="md:hidden">
+            {" "}
+            <ReportText />
+          </span>
         </div>
       </div>
     </section>
