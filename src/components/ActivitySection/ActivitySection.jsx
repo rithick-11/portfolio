@@ -9,12 +9,12 @@ const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
     items: 3,
-    slidesToSlide: 3, // optional, default to 1.
+    slidesToSlide: 2, // optional, default to 1.
   },
   tablet: {
     breakpoint: { max: 1024, min: 640 },
-    items: 2,
-    slidesToSlide: 2, // optional, default to 1.
+    items: 1,
+    slidesToSlide: 1, // optional, default to 1.
   },
   mobile: {
     breakpoint: { max: 640, min: 640 },
@@ -48,6 +48,8 @@ const ActivitySection = () => {
         minimumTouchDrag={80}
         pauseOnHover
         responsive={responsive}
+        autoPlay={true}
+        autoPlaySpeed={3000}
         className="mt-5"
       >
         {activitys.map((data, i) => (

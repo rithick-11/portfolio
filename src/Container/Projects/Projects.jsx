@@ -20,6 +20,14 @@ const Projects = () => {
     }
   }, []);
 
+  const RenderProjectsList = () => (
+    <ul className="flex overflow-x-scroll" ref={projectContainer}  >
+      {projectList?.map((project, index) => (
+        <ProjectCard key={`project-${index}`} data={project} />
+      ))}
+    </ul>
+  );
+
   return (
     <section id="project" className="pb-10 pt-[5.5rem]">
       <Tittle>Project's</Tittle>
@@ -30,6 +38,13 @@ const Projects = () => {
       >
         Design. Develop. Deliver.
       </motion.h1>
+      {isProjectLoading ? (
+        <div className="flex justify-center items-center h-40">
+          <DotLoader color="#36d7b7" size={50} />
+        </div>
+      ) : (
+        <RenderProjectsList />
+      )}
     </section>
   );
 };

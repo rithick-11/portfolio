@@ -46,7 +46,7 @@ const Home = () => {
         <motion.img
           whileInView={{ opacity: [0, 1], scale: [0.9, 1] }}
           transition={{ duration: 1.5 }}
-          src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1732556561/file_jzft2d.jpg"
+          src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1745361996/profile_pic_v1_jv5lvw.jpg"
           alt="profile img"
           className="h-[200px] md:h-[260px] rounded-full"
         />

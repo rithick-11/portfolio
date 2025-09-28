@@ -15,7 +15,7 @@ const formDataInit = {
 const domainUrl = {
   loaclHost: "http://localhost:3010",
   cloud: "https://portfolio-server-9ly0.onrender.com",
-  vercel:"https://portfolio-server-pink-seven.vercel.app"
+  vercel: "https://portfolio-server-pink-seven.vercel.app",
 };
 
 const apiStatusconstan = {
@@ -27,9 +27,9 @@ const apiStatusconstan = {
 };
 
 const apiStateInit = {
-    status: apiStatusconstan.initial,
-    errMsg: "",
-  };
+  status: apiStatusconstan.initial,
+  errMsg: "",
+};
 
 const Contact = () => {
   const [showIcon, setShowIcon] = useState(false);
@@ -45,9 +45,9 @@ const Contact = () => {
   const handelSubmit = async (e) => {
     e.preventDefault();
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(! pattern.test(loginFormData.email)){
-      toast.error("Please enter a valid email address.")
-      return
+    if (!pattern.test(loginFormData.email)) {
+      toast.error("Please enter a valid email address.");
+      return;
     }
     setApiRes((prev) => ({ ...prev, status: apiStatusconstan.loading }));
     const apiUrl = `${domainUrl.vercel}/user/contact`;
@@ -61,30 +61,110 @@ const Contact = () => {
     const res = await fetch(apiUrl, option);
     const { msg } = await res.json();
     setApiRes((prev) => ({
-        ...prev,
-        status: apiStatusconstan.success,
-        errMsg: msg,
-      }));
-      setLoginFormData(formDataInit)
+      ...prev,
+      status: apiStatusconstan.success,
+      errMsg: msg,
+    }));
+    setLoginFormData(formDataInit);
   };
 
   return (
     <section id="contact" className="min-h-screen pb-10 pt-[5.5rem]">
       <motion.h1
         whileInView={{ y: [-50, 0] }}
-        transition={{duration:.5}}
-        className="text-center animate-background-shine bg-[linear-gradient(110deg,#939393,45%,#1e293b,55%,#939393)] bg-[length:250%_100%] bg-clip-text text-2xl font-semibold text-transparent"
+        transition={{ duration: 0.5 }}
+        className="text-center mb-4 md:mb-8 animate-background-shine bg-[linear-gradient(110deg,#939393,45%,#1e293b,55%,#939393)] bg-[length:250%_100%] bg-clip-text text-2xl font-semibold text-transparent"
       >
         Get In Touch
       </motion.h1>
-      <div className="mt-10 flex flex-col gap-10 md:flex-row-reverse md:flex-1 md:shrink-0">
-        <div className="flex items-center md:w-1/2 md:flex-col gap-14 justify-center flex-grow-1 flex-shrink-0 ">
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 ">
+        <div className="flex flex-grow-1 flex-shrink-0">
+          <motion.form
+            whileInView={{ x: [-100, 0] }}
+            transition={{ duration: 0.5 }}
+            onSubmit={handelSubmit}
+            className=" bg-white/10  border-[.5px] border-orange-400 rounded-lg px-4 py-7 w-full flex flex-col"
+          >
+            <div className="flex flex-col md:grid-cols-2 gap-1">
+              <label htmlFor="name" className="text-sm">
+                Name
+              </label>
+              <input
+                id="name"
+                onChange={handleLoginForm}
+                type="text"
+                name="name"
+                placeholder="Enter name"
+                required
+                value={loginFormData.name}
+                className="text-sxl px-[12px] py-[4px] outline-none rounded-md bg-black/50"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label htmlFor="email" className="text-sm">
+                Email
+              </label>
+              <input
+                id="email"
+                onChange={handleLoginForm}
+                type="text"
+                name="email"
+                placeholder="Enter email"
+                required
+                value={loginFormData.email}
+                className="text-sxl px-[12px] py-[4px] outline-none rounded-md bg-black/50"
+              />
+            </div>
+            <div className="flex flex-col gap-3">
+              <label htmlFor="message" className="text-sm">
+                Message
+              </label>
+              <textarea
+                id="message"
+                onChange={handleLoginForm}
+                type="text"
+                name="message"
+                placeholder="Enter message"
+                required
+                value={loginFormData.message}
+                rows={5}
+                className="text-sxl px-[12px] py-[4px] outline-none rounded-md bg-black/50"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              className="relative my-2 py-1 self-start inline-flex items-center justify-center rounded-md bg-orange-500  px-3 font-medium text-white text-sm transition-colors focus:outline-none "
+            >
+              <div className="absolute -inset-0.5 -z-10 rounded-lg bg-gradient-to-b from-[#c7d2fe] to-[#8678f9] opacity-75 blur" />
+              Send
+              {apiRes.status === apiStatusconstan.loading && (
+                <ColorRing
+                  height="18"
+                  width="18"
+                  ariaLabel="color-ring-loading"
+                  colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+                />
+              )}
+            </button>
+            <p
+              className={`text-sm font- ${
+                apiRes.status === apiStatusconstan.success
+                  ? "text-blue-500"
+                  : "text-[#FF0000]"
+              }`}
+            >
+              {apiRes.status === apiStatusconstan.fail && "*"}
+              {apiRes.errMsg}
+            </p>
+          </motion.form>
+        </div>
+        <div className="flex flex-col items-center gap-5 justify-center flex-grow-1 flex-shrink-0 ">
           <motion.img
-            whileInView={{x:[30,0]}}
-            transition={{duration:.5}}
-            src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1745361996/profile_pic_v1_jv5lvw.jpg"
+            whileInView={{ x: [30, 0] }}
+            transition={{ duration: 0.5 }}
+            src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1732556561/file_jzft2d.jpg"
             alt="profile img-3"
-            className="h-60 hidden md:block shadow shadow-orange-50 rounded-full"
+            className="h-60 shadow shadow-orange-50 rounded-full"
           />
           <ul className="flex flex-row gap-4  bottom-7 left-0 mx-auto">
             <motion.li
@@ -172,98 +252,9 @@ const Contact = () => {
             </motion.li>
           </ul>
         </div>
-        <div className="flex flex-1 md:w-1/2 flex-col flex-grow-1 flex-shrink-0">
-          <motion.form
-            whileInView={{x:[-100,0]}}
-            transition={{duration:.5}}
-            onSubmit={handelSubmit}
-            className=" bg-white/10  border-[.5px] border-orange-400 rounded-lg px-4 py-7 flex flex-col gap-4"
-          >
-            <div className="flex flex-col gap-1">
-              <label htmlFor="name" className="text-sm">
-                Name
-              </label>
-              <input
-                id="name"
-                onChange={handleLoginForm}
-                type="text"
-                name="name"
-                placeholder="Enter name"
-                required
-                value={loginFormData.name}
-                className="text-sxl px-[12px] py-[4px] outline-none rounded-md bg-black/50"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="email" className="text-sm">
-                Email
-              </label>
-              <input
-                id="email"
-                onChange={handleLoginForm}
-                type="text"
-                name="email"
-                placeholder="Enter email"
-                required
-                value={loginFormData.email}
-                className="text-sxl px-[12px] py-[4px] outline-none rounded-md bg-black/50"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="message" className="text-sm">
-                Message
-              </label>
-              <textarea
-                id="message"
-                onChange={handleLoginForm}
-                type="text"
-                name="message"
-                placeholder="Enter message"
-                required
-                value={loginFormData.message}
-                rows={5}
-                className="text-sxl px-[12px] py-[4px] outline-none rounded-md bg-black/50"
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              className="relative my-2 py-1 self-start inline-flex items-center justify-center rounded-md bg-orange-500  px-3 font-medium text-white text-sm transition-colors focus:outline-none "
-            >
-              <div className="absolute -inset-0.5 -z-10 rounded-lg bg-gradient-to-b from-[#c7d2fe] to-[#8678f9] opacity-75 blur" />
-              Send{apiRes.status === apiStatusconstan.loading && (
-                <ColorRing
-                  height="18"
-                  width="18"
-                  ariaLabel="color-ring-loading"
-                  colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
-                />
-              )}
-            </button>
-            <p
-            className={`text-sm font- ${
-              apiRes.status === apiStatusconstan.success
-                ? "text-blue-500"
-                : "text-[#FF0000]"
-            }`}
-          >
-            {apiRes.status === apiStatusconstan.fail && "*"}{apiRes.errMsg}
-          </p>
-          </motion.form>
-          <div className="flex items-baseline mt-3 justify-center gap-1">
-            <p className="text-sm font-extralight">
-              If there is any bug, let konw me{" "}
-            </p>
-            <a
-              href="mailto:rithickroshan7878@gmail.com"
-              className="text-blue-500 text-xs"
-            >
-              here
-            </a>
-          </div>
-        </div>
       </div>
     </section>
   );
 };
 
-export default Contact
+export default Contact;
