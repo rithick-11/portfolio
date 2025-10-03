@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Cookies from "js-cookie";
-import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaGithub, FaGlobe } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import { ColorRing } from "react-loader-spinner";
 
@@ -30,12 +30,13 @@ const ProjectCard = (props) => {
 
   const addLikeToProject = async (pId) => {
     if (Cookies.get("user_token") === undefined) {
-      setShowLogin(true);
+      // navaigate("/login");
+      return
     } else {
       setLikeState((pre) => ({ ...pre, status: apiStatusconstan.loading }));
       try {
         apiServer.defaults.headers = {
-          Authoriaztion: `Bearer ${Cookies.get("user_token")}`,
+          Authorization: `Bearer ${Cookies.get("user_token")}`,
         };
         const res = await apiServer.put(`/user/add/like-project/${pId}`);
         setLikeState({
@@ -50,67 +51,100 @@ const ProjectCard = (props) => {
         toast.success(res.data.msg);
       } catch (err) {
         console.log(err);
-        setLikeState({ status: apiStatusconstan.fail, resMsg: err.response.data.msg });
-        toast.success(err.response.data.msg);
+        setLikeState({
+          status: apiStatusconstan.fail,
+          resMsg: err.response.data.msg,
+        });
+        toast.error(err.response.data.msg);
       }
     }
   };
 
   return (
     <>
-      <motion.li
-        whileInView={{ opacity: [0, 1], y: [150, 0] }}
-        transition={{ duration: 0.35, delay: i * 0.1 }}
-        key={each._id}
-        className="col-span-1 p-3 grid grid-cols-7 mr-2 gap-2 flex-shrink-0 bg-white/10 backdrop-blur-md border-[.5px] border-orange-400 rounded-2xl shadow-xl shadow-white/10"
-      >
-        <div className="col-span-7">
+      <motion.li className="flex flex-col h-full mr-4 relative">
+        <div className="flex flex-col h-full rounded-lg overflow-hidden border border-white/10">
           <img
-            src={each.projectImg}
-            alt={each.name}
-            className="rounded-md w-full h-44 aspect-[2/1] "
+            src={data.projectImg}
+            alt={data.name}
+            className="w-full aspect-16/9 object-cover"
           />
-        </div>
-        <h1 className="text-md font-semibold col-span-7">{each.name}</h1>
-        <p className="text-sm font-thin col-span-7">
-          {each.desc.slice(0, 86)}...
-        </p>
-
-        <a
-          href={each.siteLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="col-span-2"
-        >
-          <button className="relative my-2 py-1 inline-flex items-center justify-center rounded-md bg-orange-500  px-3 font-medium text-white text-sm transition-colors focus:outline-none ">
-            <div className="absolute -inset-0 -z-10 rounded-lg bg-gradient-to-b from-[#c7d2fe] to-[#8678f9] opacity-75 blur" />
-            Vist
-          </button>
-        </a>
-        <div className="flex gap-2 items-center justify-end col-span-2 col-start-6">
-          {likeApiState.status === apiStatusconstan.loading ? (
-            <ColorRing
-              height="18"
-              width="18"
-              ariaLabel="color-ring-loading"
-              colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
-            />
-          ) : (
-            <span
-              onClick={() => {
-                addLikeToProject(each._id);
-              }}
-              className={`text-xl cursor-pointer ${
-                each.isLiked && "text-orange-500"
-              }`}
-            >
-              {each.isLiked ? <FaHeart /> : <FaRegHeart />}
-            </span>
-          )}
-          <p className="text-sm">{each.likes}</p>
+          <div className="flex flex-col flex-grow p-5 space-y-4 bg-[#ffffff] dark:bg-[#1e1e1e]">
+            <h1 className="text-lg font-semibold">{data.name}</h1>
+            <p className="text-sm text-white/90 font-light line-clamp-3">
+              {data.desc}
+            </p>
+            <div className="flex-grow">
+              <h1 className="text-sm font-bold">Tech Stack : </h1>
+              <ul className="flex flex-wrap">
+                {data.techStack.map((tech, i) => (
+                  <li
+                    key={i}
+                    className="inline-block bg-white/10 text-white/90 px-2 py-1 rounded-md mr-2 mt-2 text-sm"
+                  >
+                    {tech}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex justify-between items-center mt-auto pt-4">
+              <div className="flex justify-between items-center gap-3">
+                <a
+                  href={data?.sourceCode}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-white/90 underline cursor-pointer flex items-center"
+                >
+                  <FaGithub className="mr-2 text-2xl" />
+                  <span className="text-sm">source code</span>
+                </a>
+                <a
+                  href={data?.siteLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-white/90 underline cursor-pointer flex items-center"
+                >
+                  <FaGlobe className="mr-2 text-2xl" />
+                  <span className="text-sm">Live link</span>
+                </a>
+              </div>
+              <div className="flex flex-col items-center gap-1">
+                {likeApiState.status === apiStatusconstan.loading ? (
+                  <ColorRing
+                    visible={true}
+                    height="30"
+                    width="30"
+                    ariaLabel="loading"
+                    wrapperStyle={{}}
+                    wrapperClass="blocks-wrapper"
+                    colors={[
+                      "#e15b64",
+                      "#f47e60",
+                      "#f8b26a",
+                      "#abbd81",
+                      "#849b87",
+                    ]}
+                  />
+                ) : (
+                  <button
+                    onClick={() => addLikeToProject(data._id)}
+                    className="text-2xl text-red-500 flex flex-col items-center cursor-pointer"
+                  >
+                    {data.isLiked ? (
+                      <FaHeart className="animate-like" />
+                    ) : (
+                      <FaRegHeart />
+                    )}
+                    <span className="text-xs text-white/90 mt-1">
+                      {each.likes}
+                    </span>
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </motion.li>
-      {showLogin && <LoginCard close={setShowLogin} />}
     </>
   );
 };

@@ -8,7 +8,7 @@ const domainUrl = {
 };
 
 const apiServer = axios.create({
-  baseURL: domainUrl.vercel,
+  baseURL: domainUrl.cloud,
   headers: {
     Authoriaztion: `Bearer ${Cookies.get("user_token")}`,
   },

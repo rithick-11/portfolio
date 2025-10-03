@@ -116,7 +116,7 @@ const LoginCard = (props) => {
     <motion.section
       initial={{ x: "100%" }}
       animate={{ x: 0 }}
-      className="fixed h-screen w-screen top-0 right-0 left-0 bg-black/65 flex items-center justify-center z-30 backdrop-blur-sm"
+      className="absolute h-screen w-screen top-0 right-0 left-0 bg-black/65 flex items-center justify-center z-1 backdrop-blur-sm"
     >
       <div className="min-h-[70%] w-[75%] sm:h-[26rem] sm:w-96 sm:px-3 bg-white/10  border-[.5px] border-orange-400 rounded-lg flex flex-col justify-between py-2 px-2">
         <div className="px-2 py-3 flex items-center justify-between">
