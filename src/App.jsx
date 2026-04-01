@@ -18,6 +18,7 @@ import Certifications from "./Container/Certifications/Certifications";
 
 import ProjectsPage from "./pages/ProjectsPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
+import LoginPage from "./pages/LoginPage";
 
 // ── Smooth page transition wrapper ──
 const AnimatedRoutes = () => {
@@ -35,6 +36,7 @@ const AnimatedRoutes = () => {
       >
         <Routes location={location}>
           <Route path="/" element={<PortfolioHome />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/project" element={<ProjectsPage />} />
           <Route path="/project/:id" element={<ProjectDetailPage />} />
         </Routes>
@@ -62,6 +64,8 @@ const PortfolioHome = () => (
   </div>
 );
 
+const PROD_API = "https://portfolio-server-pink-seven.vercel.app";
+
 const App = () => {
   const { getProject, getUserData, isAuthenticated } = useDataStore();
 
@@ -69,6 +73,15 @@ const App = () => {
     getUserData();
     getProject();
   }, [isAuthenticated]);
+
+  // ── Track visit in production (once per browser session) ──
+  useEffect(() => {
+    if (import.meta.env.PROD && !sessionStorage.getItem("_visit_tracked")) {
+      fetch(`${PROD_API}/user/count`, { method: "GET" })
+        .then(() => sessionStorage.setItem("_visit_tracked", "1"))
+        .catch(() => {}); // silent fail — never block the UI
+    }
+  }, []);
 
   return (
     <HashRouter>

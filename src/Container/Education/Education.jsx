@@ -73,13 +73,7 @@ const Education = () => {
                       : "bg-white/5 border-white/10 hover:border-white/25"
                   }`}
               >
-                {/* Current badge */}
-                {edu.current && (
-                  <span className="absolute top-4 right-4 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-orange-400 bg-orange-500/10 border border-orange-500/25 rounded-full px-2.5 py-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-orange-400 animate-pulse" />
-                    Current
-                  </span>
-                )}
+
 
                 {/* Header */}
                 <div className="flex items-start gap-3 mb-4">
@@ -91,13 +85,20 @@ const Education = () => {
                     {edu.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                    {/* Type + duration + current badge – all inline, flex-wrap prevents overlap */}
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
                       <p className="text-[11px] text-white/35 font-semibold uppercase tracking-widest">
                         {edu.type}
                       </p>
                       <span className="text-[10px] text-orange-400 font-bold bg-orange-500/10 border border-orange-500/20 rounded-full px-2 py-0.5">
                         {edu.duration}
                       </span>
+                      {edu.current && (
+                        <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-orange-400 bg-orange-500/10 border border-orange-500/25 rounded-full px-2 py-0.5">
+                          <span className="h-1.5 w-1.5 rounded-full bg-orange-400 animate-pulse" />
+                          Current
+                        </span>
+                      )}
                     </div>
                     <h3 className="text-base font-bold text-white/95 leading-snug">
                       {edu.degree}

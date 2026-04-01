@@ -17,8 +17,8 @@ const socialLinks = [
 
 const stats = [
   { value: "8+", label: "Projects" },
-  { value: "200+", label: "DSA Solved" },
-  { value: "4", label: "Certifications" },
+  { value: "150+", label: "DSA Solved" },
+  { value: "4+", label: "Certifications" },
 ];
 
 const scrollTo = (id) =>
@@ -160,7 +160,7 @@ const Home = () => {
             transition={{ duration: 0.6, ease, delay: 0.15 }}
             className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-tight"
           >
-            <span className="text-orange-500">R</span>ithickRoshan
+            <span className="text-orange-500">R</span>ithickroshan
             <span className="block text-white/60 text-2xl sm:text-3xl md:text-4xl font-semibold">S</span>
           </motion.h1>
 

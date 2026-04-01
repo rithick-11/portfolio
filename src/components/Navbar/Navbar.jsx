@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
-import LoginCard from "../LoginCard/LoginCard";
 import UserData from "../UserData/UserData";
 import { ease } from "../../lib/animations";
 
@@ -20,9 +19,8 @@ const scrollTo = (id) =>
 
 const Navbar = () => {
   const { scrollY } = useScroll();
-  const [toggle, setToggle]     = useState(false);
-  const [navShow, setNavShow]   = useState(true);
-  const [showLogin, setShowLogin] = useState(false);
+  const [toggle, setToggle]   = useState(false);
+  const [navShow, setNavShow] = useState(true);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > scrollY.getPrevious() && latest > 150) {
@@ -70,7 +68,7 @@ const Navbar = () => {
           {/* Right: auth + hamburger */}
           <div className="flex items-center gap-3">
             <div className="hidden lg:block">
-              <UserData setShowLogin={setShowLogin} />
+              <UserData />
             </div>
             <button
               onClick={() => setToggle((p) => !p)}
@@ -141,14 +139,13 @@ const Navbar = () => {
 
               {/* Drawer footer */}
               <div className="px-6 py-5 border-t border-white/10">
-                <UserData setShowLogin={setShowLogin} />
+                <UserData />
               </div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
 
-      {showLogin && <LoginCard close={() => setShowLogin(false)} />}
     </>
   );
 };
