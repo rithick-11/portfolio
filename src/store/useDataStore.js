@@ -8,16 +8,23 @@ const useDataStore = create((set) => ({
   isDataLoading: true,
   userData: {},
   isProjectLoading: false,
-  projectList: [],
+  projectList: { projects: [] },
 
   getProject: async () => {
     set({ isProjectLoading: true });
     apiServer.defaults.headers = {
-      Authoriaztion: `Bearer ${Cookies.get("user_token")}`,
+      Authorization: `Bearer ${Cookies.get("user_token")}`,
     };
     try {
-      const res = await apiServer.get("/user/project", );
-      set({ projectList: res.data });
+      const res = await apiServer.get("/user/project");
+      // Normalize: API may return { projects: [...] } or just [...]
+      const data = res.data;
+      const normalized = Array.isArray(data)
+        ? { projects: data }
+        : data?.projects
+        ? data
+        : { projects: [] };
+      set({ projectList: normalized });
     } catch (err) {
       console.log(err);
     }
@@ -30,7 +37,7 @@ const useDataStore = create((set) => ({
     }
     set({ isDataLoading: true });
     apiServer.defaults.headers = {
-      Authoriaztion: `Bearer ${Cookies.get("user_token")}`,
+      Authorization: `Bearer ${Cookies.get("user_token")}`,
     };
     try {
       const { data } = await apiServer.get("/user/data");

@@ -1,277 +1,285 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FaLinkedinIn, FaInstagram, FaGithub } from "react-icons/fa";
-import { FaXTwitter, FaSnapchat } from "react-icons/fa6";
-import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import {
+  FaLinkedinIn,
+  FaInstagram,
+  FaGithub,
+  FaEnvelope,
+  FaPaperPlane,
+} from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { ColorRing } from "react-loader-spinner";
 import toast from "react-hot-toast";
+import Tittle from "../../components/Tittle/Tittle";
+import { ease } from "../../lib/animations";
 
-const formDataInit = {
-  message: "",
-  name: "",
-  email: "",
-};
+// ─────────────────────────────────────────────
+const formInit = { name: "", email: "", message: "" };
 
-const domainUrl = {
-  loaclHost: "http://localhost:3010",
-  cloud: "https://portfolio-server-9ly0.onrender.com",
-  vercel: "https://portfolio-server-pink-seven.vercel.app",
-};
+const API_URL = "https://portfolio-server-pink-seven.vercel.app/user/contact";
 
-const apiStatusconstan = {
-  initial: "intial",
-  loading: "loading",
-  success: "success",
-  fail: "fail",
-  errMsg: "",
-};
+const STATUS = { idle: "idle", loading: "loading", done: "done" };
 
-const apiStateInit = {
-  status: apiStatusconstan.initial,
-  errMsg: "",
-};
+const socialLinks = [
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/rithickroshan-s",
+    icon: <FaLinkedinIn />,
+    color: "hover:bg-[#0A66C2]/20 hover:border-[#0A66C2]/50 hover:text-[#0A66C2]",
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/rithick-11",
+    icon: <FaGithub />,
+    color: "hover:bg-white/10 hover:border-white/30 hover:text-white",
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/s.ri_thick",
+    icon: <FaInstagram />,
+    color: "hover:bg-pink-500/15 hover:border-pink-500/40 hover:text-pink-400",
+  },
+  {
+    label: "Twitter / X",
+    href: "https://twitter.com/rithick__11",
+    icon: <FaXTwitter />,
+    color: "hover:bg-white/10 hover:border-white/30 hover:text-white",
+  },
+];
 
-const ReportText = () => (
-  <div className="flex items-baseline mt-3 justify-center gap-1">
-    <p className="text-sm font-extralight">If there is any bug, let konw me </p>
-    <a
-      href="mailto:rithickroshan7878@gmail.com"
-      className="text-blue-500 text-xs"
-    >
-      here
-    </a>
+const contactInfo = [
+  {
+    icon: <FaEnvelope className="text-orange-500" />,
+    label: "Email",
+    value: "rithickroshan7878@gmail.com",
+    href: "mailto:rithickroshan7878@gmail.com",
+  },
+  {
+    icon: <FaLinkedinIn className="text-[#0A66C2]" />,
+    label: "LinkedIn",
+    value: "rithickroshan-s",
+    href: "https://www.linkedin.com/in/rithickroshan-s",
+  },
+  {
+    icon: <FaGithub className="text-white/70" />,
+    label: "GitHub",
+    value: "rithick-11",
+    href: "https://github.com/rithick-11",
+  },
+];
+
+// ── Styled Input / Textarea ──
+const Field = ({ label, id, children }) => (
+  <div className="flex flex-col gap-1.5">
+    <label htmlFor={id} className="text-xs font-semibold uppercase tracking-wider text-white/40">
+      {label}
+    </label>
+    {children}
   </div>
 );
 
+const inputClass =
+  "w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 focus:border-orange-500/60 focus:bg-orange-500/5 outline-none text-sm text-white placeholder:text-white/25 transition-all";
+
+// ─────────────────────────────────────────────
 const Contact = () => {
-  const [showIcon, setShowIcon] = useState(false);
-  const [loginFormData, setLoginFormData] = useState(formDataInit);
-  const [apiRes, setApiRes] = useState(apiStateInit);
+  const [form, setForm]       = useState(formInit);
+  const [status, setStatus]   = useState(STATUS.idle);
 
-  const handleLoginForm = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setLoginFormData((pre) => ({ ...pre, [name]: value }));
-  };
+  const handleChange = (e) =>
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
-  const handelSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!pattern.test(loginFormData.email)) {
-      toast.error("Please enter a valid email address.");
-      return;
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email);
+    if (!emailOk) { toast.error("Please enter a valid email address."); return; }
+
+    setStatus(STATUS.loading);
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const { msg } = await res.json();
+      toast.success(msg || "Message sent!");
+      setForm(formInit);
+      setStatus(STATUS.done);
+    } catch {
+      toast.error("Failed to send. Please try again.");
+      setStatus(STATUS.idle);
     }
-    setApiRes((prev) => ({ ...prev, status: apiStatusconstan.loading }));
-    const apiUrl = `${domainUrl.vercel}/user/contact`;
-    const option = {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(loginFormData),
-    };
-    const res = await fetch(apiUrl, option);
-    const { msg } = await res.json();
-    setApiRes((prev) => ({
-      ...prev,
-      status: apiStatusconstan.success,
-      errMsg: msg,
-    }));
-    setLoginFormData(formDataInit);
   };
 
   return (
-    <section id="contact" className="min-h-screen pb-10 pt-[5.5rem]">
-      <motion.h1
-        whileInView={{ y: [-50, 0] }}
-        transition={{ duration: 0.5 }}
-        className="text-center mb-4 md:mb-8 animate-background-shine bg-[linear-gradient(110deg,#939393,45%,#1e293b,55%,#939393)] bg-[length:250%_100%] bg-clip-text text-2xl font-semibold text-transparent"
+    <section id="contact" className="min-h-screen pb-16 pt-[5.5rem]">
+      <Tittle>Get In Touch</Tittle>
+
+      <motion.p
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.45, ease }}
+        className="text-white/40 text-sm mt-2 mb-10"
       >
-        Get In Touch
-      </motion.h1>
-      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 ">
-        <div className="flex flex-col items-center gap-5 justify-centerflex-grow-1 flex-shrink-0">
-          <motion.form
-            whileInView={{ x: [-100, 0] }}
-            transition={{ duration: 0.5 }}
-            onSubmit={handelSubmit}
-            className=" bg-white/10  border-[.5px] border-orange-400 rounded-lg px-4 py-7 w-full flex flex-col"
-          >
-            <div className="flex flex-col md:grid-cols-2 gap-1">
-              <label htmlFor="name" className="text-sm">
-                Name
-              </label>
+        Have a project in mind or just want to say hi? My inbox is always open.
+      </motion.p>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        {/* ══════════════ LEFT: FORM ══════════════ */}
+        <motion.div
+          initial={{ opacity: 0, x: -32 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.55, ease }}
+          className="rounded-2xl bg-white/5 border border-white/10 p-6 sm:p-8 flex flex-col gap-5"
+        >
+          <div className="flex items-center gap-2 mb-1">
+            <FaPaperPlane className="text-orange-500 text-sm" />
+            <h3 className="text-sm font-semibold text-white/70">Send a message</h3>
+          </div>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <Field label="Name" id="name">
               <input
                 id="name"
-                onChange={handleLoginForm}
-                type="text"
                 name="name"
-                placeholder="Enter name"
+                type="text"
                 required
-                value={loginFormData.name}
-                className="text-sxl px-[12px] py-[4px] outline-none rounded-md bg-black/50"
+                placeholder="Your name"
+                value={form.name}
+                onChange={handleChange}
+                className={inputClass}
               />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="email" className="text-sm">
-                Email
-              </label>
+            </Field>
+
+            <Field label="Email" id="email">
               <input
                 id="email"
-                onChange={handleLoginForm}
-                type="text"
                 name="email"
-                placeholder="Enter email"
+                type="email"
                 required
-                value={loginFormData.email}
-                className="text-sxl px-[12px] py-[4px] outline-none rounded-md bg-black/50"
+                placeholder="your@email.com"
+                value={form.email}
+                onChange={handleChange}
+                className={inputClass}
               />
-            </div>
-            <div className="flex flex-col gap-3">
-              <label htmlFor="message" className="text-sm">
-                Message
-              </label>
+            </Field>
+
+            <Field label="Message" id="message">
               <textarea
                 id="message"
-                onChange={handleLoginForm}
-                type="text"
                 name="message"
-                placeholder="Enter message"
                 required
-                value={loginFormData.message}
                 rows={5}
-                className="text-sxl px-[12px] py-[4px] outline-none rounded-md bg-black/50"
-              ></textarea>
-            </div>
+                placeholder="What's on your mind?"
+                value={form.message}
+                onChange={handleChange}
+                className={`${inputClass} resize-none`}
+              />
+            </Field>
+
             <button
               type="submit"
-              className="relative my-2 py-1 self-start inline-flex items-center justify-center rounded-md bg-orange-500  px-3 font-medium text-white text-sm transition-colors focus:outline-none "
+              disabled={status === STATUS.loading}
+              className="mt-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white text-sm font-semibold transition-colors shadow-lg shadow-orange-500/25 cursor-pointer"
             >
-              <div className="absolute -inset-0.5 -z-10 rounded-lg bg-gradient-to-b from-[#c7d2fe] to-[#8678f9] opacity-75 blur" />
-              Send
-              {apiRes.status === apiStatusconstan.loading && (
-                <ColorRing
-                  height="18"
-                  width="18"
-                  ariaLabel="color-ring-loading"
-                  colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
-                />
+              {status === STATUS.loading ? (
+                <>
+                  <ColorRing height="18" width="18" colors={["#fff","#fff","#fff","#fff","#fff"]} />
+                  Sending…
+                </>
+              ) : status === STATUS.done ? (
+                "✓ Message sent!"
+              ) : (
+                <>
+                  <FaPaperPlane className="text-xs" />
+                  Send Message
+                </>
               )}
             </button>
-            <p
-              className={`text-sm font- ${
-                apiRes.status === apiStatusconstan.success
-                  ? "text-blue-500"
-                  : "text-[#FF0000]"
-              }`}
-            >
-              {apiRes.status === apiStatusconstan.fail && "*"}
-              {apiRes.errMsg}
+          </form>
+        </motion.div>
+
+        {/* ══════════════ RIGHT: INFO + SOCIAL ══════════════ */}
+        <motion.div
+          initial={{ opacity: 0, x: 32 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.55, ease, delay: 0.08 }}
+          className="flex flex-col gap-6"
+        >
+          {/* CTA copy */}
+          <div className="rounded-2xl bg-gradient-to-br from-orange-500/10 to-transparent border border-orange-500/20 p-6">
+            <h3 className="text-lg font-bold text-white mb-2">
+              Let's build something <span className="text-orange-500">together</span>
+            </h3>
+            <p className="text-sm text-white/50 leading-relaxed">
+              I'm currently looking for new opportunities. Whether you have a
+              question, a project idea, or just want to connect — feel free to
+              reach out. I'll get back to you as soon as possible!
             </p>
-          </motion.form>
-          <span className="md:block hidden">
-            {" "}
-            <ReportText />
-          </span>
-        </div>
-        <div className="flex flex-col items-center gap-5 justify-center flex-grow-1 flex-shrink-0 ">
-          <motion.img
-            whileInView={{ x: [30, 0] }}
-            transition={{ duration: 0.5 }}
-            src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1732556561/file_jzft2d.jpg"
-            alt="profile img-3"
-            className="h-60 shadow hidden md:block shadow-orange-50 rounded-full"
-          />
-          <ul className="flex flex-row gap-4  bottom-7 left-0 mx-auto">
-            <motion.li
-              className="h-8 w-8 cursor-pointer border-[1px] border-white rounded-full flex items-center justify-center font-md hover:bg-white/25 hover:border-2"
-              whileInView={{ y: [-30, 0] }}
-              transition={{ duration: 0.5 }}
-            >
-              <a
-                href="https://www.linkedin.com/in/rithickroshan-s"
+          </div>
+
+          {/* Contact info cards */}
+          <div className="flex flex-col gap-3">
+            {contactInfo.map((info, i) => (
+              <motion.a
+                key={info.label}
+                href={info.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, ease, delay: i * 0.1 }}
+                className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/8 hover:border-orange-500/30 hover:bg-orange-500/5 transition-all group"
               >
-                <FaLinkedinIn />
-              </a>
-            </motion.li>
-            <motion.li
-              className="h-8 w-8 cursor-pointer border-[1px] border-white rounded-full flex items-center justify-center font-md hover:bg-white/25 hover:border-2"
-              whileInView={{ x: [-30, 0] }}
-              transition={{ duration: 0.5 }}
-            >
-              <a
-                href="https://www.instagram.com/s.ri_thick"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaInstagram />
-              </a>
-            </motion.li>
-            <motion.li
-              className="h-8 w-8 cursor-pointer border-[1px] border-white rounded-full flex items-center justify-center font-md hover:bg-white/25 hover:border-2"
-              whileInView={{ x: [30, 0] }}
-              transition={{ duration: 0.5 }}
-            >
-              <a
-                href="https://github.com/rithick-11"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaGithub />
-              </a>
-            </motion.li>
-            {showIcon && (
-              <>
-                <motion.li
-                  className="h-8 w-8 cursor-pointer border-[1px] border-white rounded-full flex items-center justify-center font-md hover:bg-white/25 hover:border-2"
-                  whileInView={{ x: [-30, 0] }}
-                  transition={{ duration: 0.5 }}
+                <div className="h-10 w-10 rounded-xl bg-white/10 group-hover:bg-white/15 flex items-center justify-center text-lg transition-colors flex-shrink-0">
+                  {info.icon}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[10px] text-white/35 font-semibold uppercase tracking-wider mb-0.5">
+                    {info.label}
+                  </p>
+                  <p className="text-sm text-white/75 font-medium truncate group-hover:text-white transition-colors">
+                    {info.value}
+                  </p>
+                </div>
+                <span className="ml-auto text-white/20 group-hover:text-orange-500 transition-colors text-xs">
+                  →
+                </span>
+              </motion.a>
+            ))}
+          </div>
+
+          {/* Social icons row */}
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-white/30 mb-3">
+              Find me on
+            </p>
+            <div className="flex items-center gap-3 flex-wrap">
+              {socialLinks.map((s, i) => (
+                <motion.a
+                  key={s.href}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, ease, delay: i * 0.07 }}
+                  className={`h-10 w-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-white/55 transition-all ${s.color}`}
+                  title={s.label}
                 >
-                  <a
-                    href="https://twitter.com/rithick__11"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaXTwitter />
-                  </a>
-                </motion.li>
-                <motion.li
-                  className="h-8 w-8 cursor-pointer border-[1px] border-white rounded-full flex items-center justify-center font-md hover:bg-white/25 hover:border-2"
-                  whileInView={{ x: [30, 0] }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <a
-                    href="https://www.snapchat.com/add/ri_thick11?share_id=WJ9TQ4uEy10&locale=en-US"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaSnapchat />
-                  </a>
-                </motion.li>
-              </>
-            )}
-            <motion.li
-              className="h-8 w-8 cursor-pointer border-[1px] border-white rounded-full flex items-center justify-center font-md bg-orange-600 hover:bg-orange-600/60 hover:border-2"
-              whileInView={{ y: [30, 0] }}
-              transition={{ duration: 0.5 }}
-              onClick={() => {
-                setShowIcon((pre) => !pre);
-              }}
-            >
-              {showIcon ? (
-                <IoIosArrowBack className="text-md" />
-              ) : (
-                <IoIosArrowForward className="text-md" />
-              )}
-            </motion.li>
-          </ul>
-          <span className="md:hidden">
-            {" "}
-            <ReportText />
-          </span>
-        </div>
+                  {s.icon}
+                </motion.a>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

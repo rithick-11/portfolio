@@ -1,112 +1,155 @@
 import React, { useState } from "react";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { HiBars3BottomRight } from "react-icons/hi2";
-
-import { RxCrossCircled } from "react-icons/rx";
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { HiMenuAlt3, HiX } from "react-icons/hi";
 import LoginCard from "../LoginCard/LoginCard";
 import UserData from "../UserData/UserData";
+import { ease } from "../../lib/animations";
+
+const navLinks = [
+  { label: "Home",           id: "home" },
+  { label: "About",          id: "about" },
+  { label: "Education",      id: "education" },
+  { label: "Skills",         id: "skills" },
+  { label: "Projects",       id: "project" },
+  { label: "Certifications", id: "certifications" },
+  { label: "Contact",        id: "contact" },
+];
+
+const scrollTo = (id) =>
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
 const Navbar = () => {
   const { scrollY } = useScroll();
-
-  const [toggle, setToggle] = useState(false);
-  const [navShow, setNavShow] = useState(true);
+  const [toggle, setToggle]     = useState(false);
+  const [navShow, setNavShow]   = useState(true);
   const [showLogin, setShowLogin] = useState(false);
 
-  useMotionValueEvent(scrollY, "change", (last) => {
-    if (last > scrollY.getPrevious() && last > 200) {
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest > scrollY.getPrevious() && latest > 150) {
       setNavShow(false);
+      setToggle(false);
     } else {
       setNavShow(true);
     }
   });
-  
-  const navItems = [
-    "home",
-    "about",
-    "education",
-    "skills",
-    "project",
-    "contact",
-  ];
+
   return (
-    <motion.div
-      variants={{ visable: { y: 0 }, hide: { y: "-100%" } }}
-      animate={navShow ? "visable" : "hide"}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
-      className="text-white px-4 py-4 sm:px-16 md:px-24 fixed top-0 right-0 left-0 z-30"
-    >
-      <nav className="flex items-center gap-4 justify-between px-4 py-2 rounded-full border-[1px] bg-white/5 shadow-md backdrop-blur drop-shadow-md border-white">
-        <div className="text-2xl font-medium">
-          Rithic<span>K</span>
-        </div>
-        <div className="hidden lg:flex flex-[.75] justify-evenly uppercase ">
-          <ul className="flex items-center">
-            {navItems.map((items, i) => (
-              <l1
-                key={items + i}
-                className="px-2 py-1 mr-2 text-sm text-white/90"
-              >
-                <a href={`#${items}`} className="hover:text-orange-500">
-                  {items}
-                </a>
-              </l1>
+    <>
+      {/* ── Main nav bar ── */}
+      <motion.header
+        variants={{ visible: { y: 0, opacity: 1 }, hidden: { y: "-110%", opacity: 0 } }}
+        animate={navShow ? "visible" : "hidden"}
+        transition={{ duration: 0.4, ease }}
+        className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-10 md:px-20 py-4"
+      >
+        <nav className="flex items-center justify-between px-5 py-3 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg shadow-black/30">
+
+          {/* Logo */}
+          <button
+            onClick={() => scrollTo("home")}
+            className="text-xl font-bold tracking-tight cursor-pointer text-white"
+          >
+            Rithic<span className="text-orange-500">K</span>
+          </button>
+
+          {/* Desktop links */}
+          <ul className="hidden lg:flex items-center gap-0.5">
+            {navLinks.map((link) => (
+              <li key={link.id}>
+                <button
+                  onClick={() => scrollTo(link.id)}
+                  className="relative px-3 py-1.5 text-sm text-white/55 hover:text-white transition-colors rounded-lg hover:bg-white/5 group cursor-pointer"
+                >
+                  {link.label}
+                  <span className="absolute bottom-1 left-1/2 -translate-x-1/2 h-[2px] w-0 bg-orange-500 group-hover:w-[60%] transition-all duration-300 rounded-full" />
+                </button>
+              </li>
             ))}
           </ul>
-          <UserData setShowLogin={setShowLogin} />
-        </div>
-        {toggle ? (
-          <RxCrossCircled
-            className="text-2xl font-bold mr-3 lg:hidden"
-            onClick={() => {
-              setToggle(false);
-            }}
-          />
-        ) : (
-          <HiBars3BottomRight
-            className="text-2xl font-bold mr-3 lg:hidden"
-            onClick={() => {
-              setToggle(true);
-            }}
-          />
-        )}
+
+          {/* Right: auth + hamburger */}
+          <div className="flex items-center gap-3">
+            <div className="hidden lg:block">
+              <UserData setShowLogin={setShowLogin} />
+            </div>
+            <button
+              onClick={() => setToggle((p) => !p)}
+              className="lg:hidden h-9 w-9 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-white/70 hover:text-white hover:border-orange-500/40 transition-all"
+              aria-label="Toggle menu"
+            >
+              {toggle ? <HiX className="text-lg" /> : <HiMenuAlt3 className="text-lg" />}
+            </button>
+          </div>
+        </nav>
+      </motion.header>
+
+      {/* ── Mobile full-screen drawer ── */}
+      <AnimatePresence>
         {toggle && (
-          <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            className="absolute flex flex-col uppercase top-0 right-5 bg-black/80 px-8 py-10 mt-16 gap-5 text-right border-[1px] border-white backdrop-blur rounded-lg lg:hidden"
-          >
-            <ul className="flex flex-col gap-4">
-              {navItems.map((items, i) => (
-                <l1
-                  key={items + i}
-                  className="px-2 py-1 mr-2 text-sm text-white/90"
+          <>
+            {/* Backdrop */}
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.22 }}
+              className="fixed inset-0 bg-black/65 backdrop-blur-sm z-40 lg:hidden"
+              onClick={() => setToggle(false)}
+            />
+
+            {/* Side panel */}
+            <motion.div
+              key="drawer"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.3, ease }}
+              className="fixed right-0 top-0 h-full w-72 bg-neutral-950 border-l border-white/10 z-50 flex flex-col lg:hidden"
+            >
+              {/* Drawer header */}
+              <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+                <span className="font-bold text-lg">
+                  Rithic<span className="text-orange-500">K</span>
+                </span>
+                <button
+                  onClick={() => setToggle(false)}
+                  className="h-8 w-8 rounded-lg border border-white/10 flex items-center justify-center text-white/60 hover:text-white transition-colors"
                 >
-                  <a
-                    href={`#${items}`}
-                    className="hover:text-orange-500"
-                    onClick={() => {
-                      setToggle(false);
-                      setNavShow(true);
-                    }}
+                  <HiX />
+                </button>
+              </div>
+
+              {/* Links */}
+              <ul className="flex flex-col gap-1 px-4 py-6 flex-1 overflow-y-auto">
+                {navLinks.map((link, i) => (
+                  <motion.li
+                    key={link.id}
+                    initial={{ opacity: 0, x: 24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.06, duration: 0.25, ease }}
                   >
-                    {items}
-                  </a>
-                </l1>
-              ))}
-            </ul>
-            <UserData setShowLogin={setShowLogin} />
-          </motion.div>
+                    <button
+                      onClick={() => { scrollTo(link.id); setToggle(false); }}
+                      className="w-full text-left px-4 py-3 rounded-xl text-white/60 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-all text-sm"
+                    >
+                      {link.label}
+                    </button>
+                  </motion.li>
+                ))}
+              </ul>
+
+              {/* Drawer footer */}
+              <div className="px-6 py-5 border-t border-white/10">
+                <UserData setShowLogin={setShowLogin} />
+              </div>
+            </motion.div>
+          </>
         )}
-      </nav>
-      {showLogin && (
-        <LoginCard
-          close={() => {
-            setShowLogin(false);
-          }}
-        />
-      )}
-    </motion.div>
+      </AnimatePresence>
+
+      {showLogin && <LoginCard close={() => setShowLogin(false)} />}
+    </>
   );
 };
 
