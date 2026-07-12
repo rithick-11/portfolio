@@ -1,44 +1,20 @@
+
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Tittle from "../../components/Tittle/Tittle";
 import { ease } from "../../lib/animations";
-import bootstapLogo  from "../../Asserts/bootstrap.png";
-import cssLogo       from "../../Asserts/css.png";
-import htmlLogo      from "../../Asserts/html.png";
-import javaLogo      from "../../Asserts/java.png";
-import jasvascriptLogo from "../../Asserts/javascript.png";
-import mongoDbLogo   from "../../Asserts/mangoDB.png";
-import nodeLogo      from "../../Asserts/node.png";
-import pythonLogo    from "../../Asserts/python.png";
-import reactLogo     from "../../Asserts/react.png";
-import expressLogo   from "../../Asserts/express.png";
-import sqlLogo       from "../../Asserts/sql.png";
-import tailwindLogo  from "../../Asserts/tailwind.png";
-
+import { skillsList } from "../../lib/data";
 // ── Category config ──
-const CATS = ["All", "Frontend", "Backend", "Database", "Language"];
+const CATS = ["All", "Frontend", "Backend", "Database", "Language", "DevOps"];
 
 // Proficiency level → colour
 const levelStyle = {
-  Expert:       "text-orange-400  bg-orange-400/10  border-orange-400/25",
-  Advanced:     "text-sky-400     bg-sky-400/10      border-sky-400/25",
+  Expert: "text-orange-400  bg-orange-400/10  border-orange-400/25",
+  Advanced: "text-sky-400     bg-sky-400/10      border-sky-400/25",
   Intermediate: "text-emerald-400 bg-emerald-400/10  border-emerald-400/25",
 };
 
-const skillsList = [
-  { name: "HTML",       logo: htmlLogo,        category: "Frontend",  level: "Expert"       },
-  { name: "CSS",        logo: cssLogo,         category: "Frontend",  level: "Expert"       },
-  { name: "JavaScript", logo: jasvascriptLogo, category: "Frontend",  level: "Advanced"     },
-  { name: "React",      logo: reactLogo,       category: "Frontend",  level: "Advanced"     },
-  { name: "Tailwind",   logo: tailwindLogo,    category: "Frontend",  level: "Advanced"     },
-  { name: "Bootstrap",  logo: bootstapLogo,    category: "Frontend",  level: "Intermediate" },
-  { name: "Node.js",    logo: nodeLogo,        category: "Backend",   level: "Advanced"     },
-  { name: "Express",    logo: expressLogo,     category: "Backend",   level: "Advanced"     },
-  { name: "Python",     logo: pythonLogo,      category: "Language",  level: "Advanced"     },
-  { name: "Java",       logo: javaLogo,        category: "Language",  level: "Intermediate" },
-  { name: "MySQL",      logo: sqlLogo,         category: "Database",  level: "Intermediate" },
-  { name: "MongoDB",    logo: mongoDbLogo,     category: "Database",  level: "Intermediate" },
-];
+
 
 // ── Skill card ──
 const SkillCard = ({ skill, delay }) => (
@@ -91,11 +67,10 @@ const Skills = () => {
           <button
             key={cat}
             onClick={() => setActive(cat)}
-            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all border ${
-              active === cat
+            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all border ${active === cat
                 ? "bg-orange-500 border-orange-500 text-white shadow-md shadow-orange-500/30"
                 : "bg-white/5 border-white/10 text-white/50 hover:text-white hover:border-white/25"
-            }`}
+              }`}
           >
             {cat}
           </button>

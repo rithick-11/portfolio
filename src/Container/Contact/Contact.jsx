@@ -12,11 +12,12 @@ import { ColorRing } from "react-loader-spinner";
 import toast from "react-hot-toast";
 import Tittle from "../../components/Tittle/Tittle";
 import { ease } from "../../lib/animations";
+import { MdContactPage } from "react-icons/md";
 
 // ─────────────────────────────────────────────
 const formInit = { name: "", email: "", message: "" };
 
-const API_URL = "https://portfolio-server-pink-seven.vercel.app/user/contact";
+const API_URL = `${import.meta.env.VITE_API_URL ?? "http://localhost:3010"}/user/contact`;
 
 const STATUS = { idle: "idle", loading: "loading", done: "done" };
 
@@ -65,6 +66,12 @@ const contactInfo = [
     label: "GitHub",
     value: "rithick-11",
     href: "https://github.com/rithick-11",
+  },
+  {
+    icon: <MdContactPage className="text-white/70" />,
+    label: "Resume",
+    value: "Rithickroshan S",
+    href: "https://drive.google.com/file/d/1NCHCK7QhbO8d5dYf1vmaYMWCbhkIh9yF/view?usp=drive_link",
   },
 ];
 

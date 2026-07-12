@@ -64,7 +64,7 @@ const PortfolioHome = () => (
   </div>
 );
 
-const PROD_API = "https://portfolio-server-pink-seven.vercel.app";
+const PROD_API = import.meta.env.VITE_API_URL ?? "http://localhost:3010";
 
 const App = () => {
   const { getProject, getUserData, isAuthenticated } = useDataStore();

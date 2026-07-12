@@ -1,24 +1,28 @@
 import React from "react";
 import Typewriter from "typewriter-effect";
 import { motion } from "framer-motion";
-import { FaLinkedinIn, FaInstagram, FaGithub, FaArrowDown } from "react-icons/fa";
+import { FaLinkedinIn, FaInstagram, FaGithub, FaArrowDown, FaMailBulk } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import nodeLogo from "../../Asserts/node.png";
 import reactLogo from "../../Asserts/react.png";
 import pythonLogo from "../../Asserts/python.png";
 import { ease } from "../../lib/animations";
+import { IoMdMailOpen } from "react-icons/io";
+import { MdContactPage } from "react-icons/md";
 
 const socialLinks = [
   { href: "https://www.linkedin.com/in/rithickroshan-s", icon: <FaLinkedinIn />, label: "LinkedIn" },
   { href: "https://github.com/rithick-11", icon: <FaGithub />, label: "GitHub" },
   { href: "https://www.instagram.com/s.ri_thick", icon: <FaInstagram />, label: "Instagram" },
   { href: "https://twitter.com/rithick__11", icon: <FaXTwitter />, label: "Twitter" },
+  { href: "mailto:rithickroshan7878@gmail.com", icon: <IoMdMailOpen />, label: "Email" },
+  { href: "https://drive.google.com/file/d/1NCHCK7QhbO8d5dYf1vmaYMWCbhkIh9yF/view?usp=drive_link", icon: <MdContactPage />, label: "Resume" },
 ];
 
 const stats = [
-  { value: "8+", label: "Projects" },
+  { value: "10+", label: "Projects" },
   { value: "150+", label: "DSA Solved" },
-  { value: "4+", label: "Certifications" },
+  { value: "8+", label: "Certifications" },
 ];
 
 const scrollTo = (id) =>

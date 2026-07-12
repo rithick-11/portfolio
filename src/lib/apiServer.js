@@ -1,14 +1,8 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const domainUrl = {
-  loaclHost: "http://localhost:3010",
-  cloud: "https://portfolio-server-9ly0.onrender.com",
-  vercel: "https://portfolio-server-pink-seven.vercel.app",
-};
-
 const apiServer = axios.create({
-  baseURL: domainUrl.vercel,
+  baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:3010",
   headers: {
     Authorization: `Bearer ${Cookies.get("user_token")}`,
   },
