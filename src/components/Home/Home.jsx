@@ -75,7 +75,7 @@ const Home = () => {
               style={{ boxShadow: "0 0 60px rgba(249,115,22,0.22), 0 0 0 1px rgba(249,115,22,0.22)" }}
             >
               <img
-                src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1745361996/profile_pic_v1_jv5lvw.jpg"
+                src="https://res.cloudinary.com/dwpmsw2i4/image/upload/v1791137900/profile_pic_2026_xoaxxi_qoiswk.png"
                 alt="RithickRoshan S"
                 className="h-full w-full object-cover"
               />
